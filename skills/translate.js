@@ -4,10 +4,10 @@ module.exports = function(controller) {
   // such as hears handlers that match triggers defined in code
   // or controller.studio.before, validate, and after which tie into triggers
   // defined in the Botkit Studio UI.
-  controller.hears('translate', ['direct_message', 'direct_mention', 'mention'], function(bot, message) {
+  controller.on('slash_command', function(bot, message) {
 
-    bot.reply(message, 'Hello Peter.');
-    console.log(bot + message);
+    // reply to slash command
+    bot.replyPublic(message, 'Everyone can see the results of this slash command' + message);
 
   });
 
