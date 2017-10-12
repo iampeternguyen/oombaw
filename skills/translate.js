@@ -7,7 +7,7 @@ module.exports = function(controller) {
   controller.on('slash_command', function(bot, message) {
 
     // reply to slash command
-    bot.replyPublic(message, 'Everyone can see the results of this slash command' + JSON.stringify(message));
+    bot.replyPublic(message, 'Everyone can see the results of this slash command' + message.text);
 
   });
 
