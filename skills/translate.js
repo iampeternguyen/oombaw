@@ -66,6 +66,7 @@ module.exports = function(controller) {
 
         controller.on('interactive_message_callback', function(bot, message) {
           bot.reply(message, 'preferences saved ' + message.callback_id);
+          oombawDB.addUserPref(message, message.text);
         });
       }
     })
