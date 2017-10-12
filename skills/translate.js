@@ -64,9 +64,9 @@ module.exports = function(controller) {
         });
 
         controller.on('interactive_message_callback', function(bot, message) {
-          bot.whisper(message, 'preferences saved ' + original);
+          //bot.whisper(message, 'preferences saved ' + original);
           oombawDB.addUserPref(message, message.text).then(currentUser => {
-            bot.replyPrivate(message, translateWord(currentUser, original, message));;
+            bot.replyPrivate(message, translateWord(currentUser, original, message));
           });
         });
       }
