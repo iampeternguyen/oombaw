@@ -77,7 +77,7 @@ module.exports = function(controller) {
 
 
   function translateWord(currentUser, text, message) {
-    bot.replyPrivate(message, text);
+    bot.whisper(message, text);
     translate(text, {
         to: currentUser.translateTo
       })
