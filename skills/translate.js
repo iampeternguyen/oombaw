@@ -13,9 +13,21 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(message).then(currentUser => {
       let userObj = currentUser.toObject();
       if (userObj.hasOwnProperty('translateTo')) {
-        bot.reply('Already have user preference');
+        bot.startConversation(message, function(err, convo) {
+          convo.say('Better take this private...')
+          convo.say({
+            ephemeral: true,
+            text: 'you saved your preferences'
+          })
+        })
       } else {
-        bot.reply('Do not have user preference');
+        bot.startConversation(message, function(err, convo) {
+          convo.say('Better take this private...')
+          convo.say({
+            ephemeral: true,
+            text: 'you haven\'t saved your preferences'
+          })
+        })
       }
     })
     // message.text
