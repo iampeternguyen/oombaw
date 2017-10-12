@@ -65,7 +65,7 @@ module.exports = function(controller) {
         });
 
         controller.on('interactive_message_callback', function(bot, message) {
-          bot.reply(message, 'preferences saved ' + message.attachments[0].callback_id);
+          bot.reply(message, 'preferences saved ' + JSON.stringify(message));
         });
       }
     })
