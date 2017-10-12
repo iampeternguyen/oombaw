@@ -126,7 +126,7 @@ module.exports = function(controller) {
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
-      bot.say({
+      bot.whisper({
         user: currentUser.userID,
         text: translatedMessage.text,
         attachments: [{
