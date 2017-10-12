@@ -10,7 +10,14 @@ module.exports = function(controller) {
   controller.on('slash_command', function(bot, message) {
 
     // reply to slash command
-    oombawDB.checkAddUser(message);
+    oombawDB.checkAddUser(message).then(currentUser => {
+      let userObj = currentUser.toObject();
+      if (userObj.hasOwnProperty('translateTo')) {
+        bot.reply('Already have user preference');
+      } else {
+        bot.reply('Do not have user preference');
+      }
+    })
     // message.text
     bot.replyPublic(message, 'Everyone can see the results of this slash command' + message.text);
 
