@@ -64,9 +64,9 @@ module.exports = function(controller) {
           }]
         });
 
-        // controller.on('interactive_message_callback', function(bot, message) {
-        //   bot.reply(message, 'preferences saved');
-        // });
+        controller.on('interactive_message_callback', function(bot, message) {
+          bot.reply(message, 'preferences saved ' + message.attachments.callback_id);
+        });
       }
     })
 
