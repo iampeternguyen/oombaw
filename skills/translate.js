@@ -15,7 +15,7 @@ module.exports = function(controller) {
       if (userObj.hasOwnProperty('translateTo')) {
         bot.whisper(message, "translating...");
         let original = message.text;
-        translateWord(currentUser, original);
+        translateWord(currentUser, original, message);
       } else {
         let original = message.text;
         bot.whisper(message, {
@@ -67,7 +67,7 @@ module.exports = function(controller) {
         controller.on('interactive_message_callback', function(bot, message) {
           bot.whisper(message, 'preferences saved ' + message.callback_id);
           oombawDB.addUserPref(message, message.text).then(currentUser => {
-            translateWord(currentUser, original);
+            translateWord(currentUser, original, message);
           });
         });
       }
@@ -76,7 +76,7 @@ module.exports = function(controller) {
   });
 
 
-  function translateWord(currentUser, text) {
+  function translateWord(currentUser, text, message) {
     console.log(text);
     translate(text, {
         to: currentUser.translateTo
@@ -84,7 +84,7 @@ module.exports = function(controller) {
       .then(res => {
         res.original = text.toLowerCase();
         res.translated = res.text.toLowerCase();
-        bot.whisper(res.original + ': ' + res.translated);
+        bot.whisper(message, res.original + ': ' + res.translated);
         //console.log(original + ' is ' + translated);
         // console.log(res.text);
         // => I speak English
