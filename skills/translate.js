@@ -66,7 +66,7 @@ module.exports = function(controller) {
         controller.on('interactive_message_callback', function(bot, message) {
           //bot.whisper(message, 'preferences saved ' + original);
           oombawDB.addUserPref(message, message.text).then(currentUser => {
-            bot.replyPrivate(message, translateWord(currentUser, original, message));
+            bot.replyPrivate(message, translateWord(currentUser, original));
           });
         });
       }
@@ -82,7 +82,7 @@ module.exports = function(controller) {
       .then(res => {
         res.original = text.toLowerCase();
         res.translated = res.text.toLowerCase();
-        return res.original + ': ' + res.translated;
+        return String(res.original + ': ' + res.translated);
         //console.log(original + ' is ' + translated);
         // console.log(res.text);
         // => I speak English
