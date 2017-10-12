@@ -74,7 +74,8 @@ module.exports = function(controller) {
 
               bot.replyInteractive(message, {
                 text: res,
-                replace_original: false,
+                replace_original: true,
+                callback_id: 'language_selection',
                 response_type: 'ephemeral'
               }, (err) => {
                 if (err) {
