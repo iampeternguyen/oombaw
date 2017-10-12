@@ -123,10 +123,11 @@ module.exports = function(controller) {
   }
 
   function saveYesOrNo(currentUser, res) {
+    // TODO Fix this
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
-      bot.whisper({
+      bot.send({
         user: currentUser.userID,
         text: translatedMessage.text,
         attachments: [{
