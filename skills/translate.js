@@ -15,7 +15,7 @@ module.exports = function(controller) {
         //bot.whisper(message, "translating...");
         let original = message.text;
         translateWord(currentUser, original).then(res => {
-          bot.replyPrivate(message, res);
+          bot.replyPrivate(message, res.original + ": " + res.translated);
         });
       } else {
         let original = message.text;
@@ -73,7 +73,7 @@ module.exports = function(controller) {
             translateWord(currentUser, original).then(res => {
 
               bot.replyInteractive(message, {
-                text: res,
+                text: res.original + ": " + res.translated,
                 replace_original: true,
                 callback_id: 'language_selection',
                 response_type: 'ephemeral'
@@ -105,8 +105,7 @@ module.exports = function(controller) {
           } else {
             res.original = text.toLowerCase();
             res.translated = res.text.toLowerCase();
-            let translation = res.original + ": " + res.translated
-            resolve(translation);
+            resolve(res);
             //bot.replyPrivate(message, res.original + ': ' + res.translated);
             //console.log(original + ' is ' + translated);
             // console.log(res.text);
