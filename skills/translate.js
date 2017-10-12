@@ -69,7 +69,7 @@ module.exports = function(controller) {
           //bot.whisper(message, 'preferences saved ' + original);
           oombawDB.addUserPref(message, message.text).then(currentUser => {
             translateWord(currentUser, original).then(res => {
-              bot.replyPrivate(message, res);
+              bot.whisper(message, res);
             });
           });
         });
