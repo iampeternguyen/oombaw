@@ -16,7 +16,7 @@ module.exports = function(controller) {
         let original = message.text;
         translateWord(currentUser, original).then(res => {
           bot.replyPrivate(message, res.original + ": " + res.translated);
-          saveYesOrNo(currentUser, res)
+          saveYesOrNo(currentUser, res);
         });
       } else {
         let original = message.text;
@@ -126,9 +126,9 @@ module.exports = function(controller) {
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
-      bot.sendEphemeral({
+      bot.say({
         user: currentUser.userID,
-        text: '',
+        text: translatedMessage.text,
         attachments: [{
           text: translatedMessage.text,
           fallback: 'Yes or No?',
