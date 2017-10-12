@@ -22,7 +22,6 @@ module.exports = function(controller) {
         bot.replyPrivate(message, {
           "text": "What language would you like to translate to?",
           "response_type": "ephemeral",
-          "delete_original": "true",
           "attachments": [{
             //"text": "Choose a language to translate to",
             "fallback": "",
