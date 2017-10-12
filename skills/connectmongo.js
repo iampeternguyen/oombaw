@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 
 //Connect to mongodb
 module.exports = function(controller) {
-  mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASS + '@ds127063.mlab.com:27063/oombaw');
+  mongoose.connect(process.env.MONGO_URI);
   mongoose.connection
     .once('open', function() {
       console.log('Connection has been made, now make fireworks...');
