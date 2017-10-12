@@ -13,6 +13,11 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(message).then(currentUser => {
       let userObj = currentUser.toObject();
       if (userObj.hasOwnProperty('translateTo')) {
+        bot.reply(message, "translating...");
+        let original = message.text;
+
+      } else {
+        let original = message.text;
         bot.reply(message, {
           "text": "What language would you like to translate to?",
           "response_type": "ephemeral",
@@ -59,12 +64,11 @@ module.exports = function(controller) {
           }]
         });
 
-      } else {
-        bot.reply(message, 'You have\'t saved your preferences');
+        controller.on('interactive_message_callback', function(bot, message) {
+          bot.reply(message, 'preferences saved');
+        });
       }
     })
-    // message.text
-    bot.replyPublic(message, 'Everyone can see the results of this slash command' + message.text);
 
   });
 
