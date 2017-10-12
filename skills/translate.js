@@ -101,7 +101,7 @@ module.exports = function(controller) {
             //saveYesOrNo(currentUser, msg, res);
           }
 
-        });
+        }).catch("transation error");
     });
   }
 
