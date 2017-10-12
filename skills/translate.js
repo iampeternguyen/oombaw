@@ -84,7 +84,7 @@ module.exports = function(controller) {
       .then(res => {
         res.original = text.toLowerCase();
         res.translated = res.text.toLowerCase();
-        bot.whisper(res.original ': ' + res.translated);
+        bot.whisper(res.original + ': ' + res.translated);
         //console.log(original + ' is ' + translated);
         // console.log(res.text);
         // => I speak English
