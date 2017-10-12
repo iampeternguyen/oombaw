@@ -1,3 +1,6 @@
+const translate = require('google-translate-api-extended');
+const oombawDB = require('../controllers/oombawDB');
+
 module.exports = function(controller) {
 
   // add event handlers to controller
@@ -7,6 +10,8 @@ module.exports = function(controller) {
   controller.on('slash_command', function(bot, message) {
 
     // reply to slash command
+    oombawDB.checkAddUser(message);
+    // message.text
     bot.replyPublic(message, 'Everyone can see the results of this slash command' + message.text);
 
   });
