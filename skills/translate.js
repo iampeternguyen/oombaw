@@ -80,20 +80,22 @@ module.exports = function(controller) {
 
 
   function translateWord(currentUser, text) {
-    translate(text, {
-        to: currentUser.translateTo
-      })
-      .then(res => {
-        res.original = text.toLowerCase();
-        res.translated = res.text.toLowerCase();
-        resolve(String(res.original + ': ' + res.translated));
-        //console.log(original + ' is ' + translated);
-        // console.log(res.text);
-        // => I speak English
-        // console.log(res.from.language.iso);
-        // => nl
-        //saveYesOrNo(currentUser, msg, res);
-      });
+    return new Promise((resolve, reject) => {
+      translate(text, {
+          to: currentUser.translateTo
+        })
+        .then(res => {
+          res.original = text.toLowerCase();
+          res.translated = res.text.toLowerCase();
+          resolve(String(res.original + ': ' + res.translated));
+          //console.log(original + ' is ' + translated);
+          // console.log(res.text);
+          // => I speak English
+          // console.log(res.from.language.iso);
+          // => nl
+          //saveYesOrNo(currentUser, msg, res);
+        });
+    });
   }
 
 }
