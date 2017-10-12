@@ -14,7 +14,7 @@ module.exports = function(controller) {
       if (userObj.hasOwnProperty('translateTo')) {
         //bot.whisper(message, "translating...");
         let original = message.text;
-        bot.replyPrivate(message, translateWord(currentUser, original));
+        bot.replyPrivate(message, translateWord(userObj, original));
       } else {
         let original = message.text;
         bot.replyPrivate(message, {
