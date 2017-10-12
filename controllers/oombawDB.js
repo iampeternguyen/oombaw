@@ -45,7 +45,7 @@ function addUserPref(message, value) {
   return new Promise((resolve, reject) => {
     User.findOne({
       teamID: message.team.id,
-      userID: message.user.id,
+      userID: message.user,
     }).then(result => {
       if (result === null) {
         let err = 'could not change preferences';
