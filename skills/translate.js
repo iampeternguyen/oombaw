@@ -82,7 +82,8 @@ module.exports = function(controller) {
       .then(res => {
         res.original = text.toLowerCase();
         res.translated = res.text.toLowerCase();
-        return res.original + ": " + res.translated
+        let translation = res.original + ": " + res.translated
+        return String(translation);
         //bot.replyPrivate(message, res.original + ': ' + res.translated);
         //console.log(original + ' is ' + translated);
         // console.log(res.text);
