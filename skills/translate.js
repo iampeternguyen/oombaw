@@ -13,10 +13,10 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(message).then(currentUser => {
       let userObj = currentUser.toObject();
       if (userObj.hasOwnProperty('translateTo')) {
-        bot.send(message, 'You have saved your preferences');
+        bot.reply(message, 'You have saved your preferences');
 
       } else {
-        bot.send(message, 'You have\'t saved your preferences');
+        bot.reply(message, 'You have\'t saved your preferences');
       }
     })
     // message.text
