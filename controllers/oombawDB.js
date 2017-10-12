@@ -53,7 +53,7 @@ function addUserPref(message, value) {
       } else {
         result.translateTo = value;
         result.save().then(() => {
-          resolve(result, message);
+          resolve(result);
         });
       }
     });
