@@ -14,9 +14,7 @@ module.exports = function(controller) {
       if (userObj.hasOwnProperty('translateTo')) {
         //bot.whisper(message, "translating...");
         let original = message.text;
-        translateWord(currentUser, original).then(res => {
-          bot.replyPrivate(message, res);
-        })
+        translateWord(currentUser, original, message);
       } else {
         let original = message.text;
         bot.replyPrivate(message, {
@@ -66,11 +64,10 @@ module.exports = function(controller) {
         });
 
         controller.on('interactive_message_callback', function(bot, message) {
-          //bot.whisper(message, 'preferences saved ' + original);
+          bot.whisper(message, 'preferences saved ' + original);
           oombawDB.addUserPref(message, message.text).then(currentUser => {
-            translateWord(currentUser, original).then(res => {
-              bot.replyPrivate(message, res);
-            })
+            bot.whisper(message, 'translating... ' + message);
+            translateWord(currentUser, original, message);
           });
         });
       }
@@ -79,26 +76,21 @@ module.exports = function(controller) {
   });
 
 
-  function translateWord(currentUser, text) {
-    return new Promise((resolve, reject) => {
-      translate(text, {
-          to: currentUser.translateTo
-        })
-        .then(res => {
-          res.original = text.toLowerCase();
-          res.translated = res.text.toLowerCase();
-          resolve(String(res.original + ': ' + res.translated));
-          if (res == null) {
-            reject("problem translating word")
-          }
-          //console.log(original + ' is ' + translated);
-          // console.log(res.text);
-          // => I speak English
-          // console.log(res.from.language.iso);
-          // => nl
-          //saveYesOrNo(currentUser, msg, res);
-        });
-    });
+  function translateWord(currentUser, text, message) {
+    translate(text, {
+        to: currentUser.translateTo
+      })
+      .then(res => {
+        res.original = text.toLowerCase();
+        res.translated = res.text.toLowerCase();
+        bot.replyPrivate(message, res.original + ': ' + res.translated);
+        //console.log(original + ' is ' + translated);
+        // console.log(res.text);
+        // => I speak English
+        // console.log(res.from.language.iso);
+        // => nl
+        //saveYesOrNo(currentUser, msg, res);
+      });
   }
 
 }
