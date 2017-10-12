@@ -13,7 +13,51 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(message).then(currentUser => {
       let userObj = currentUser.toObject();
       if (userObj.hasOwnProperty('translateTo')) {
-        bot.reply(message, 'You have saved your preferences');
+        bot.reply(message, {
+          "text": "What language would you like to translate to?",
+          "response_type": "ephemeral",
+          "attachments": [{
+            //"text": "Choose a language to translate to",
+            "fallback": "",
+            "color": "#3AA3E3",
+            "attachment_type": "default",
+            "callback_id": "language_selection",
+            "actions": [{
+              "name": "language_choice",
+              "text": "Pick a language...",
+              "type": "select",
+              "options": [{
+                  "text": "Afrikaans",
+                  "value": "af"
+                },
+                {
+                  "text": "Albanian",
+                  "value": "sq"
+                },
+                {
+                  "text": "Arabic ",
+                  "value": "ar"
+                },
+                {
+                  "text": "Azerbaijani",
+                  "value": "az"
+                },
+                {
+                  "text": "Basque",
+                  "value": "eu"
+                },
+                {
+                  "text": "English",
+                  "value": "en"
+                },
+                {
+                  "text": "Vietnamese",
+                  "value": "vi"
+                }
+              ]
+            }]
+          }]
+        });
 
       } else {
         bot.reply(message, 'You have\'t saved your preferences');
