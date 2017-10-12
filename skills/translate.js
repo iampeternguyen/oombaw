@@ -88,6 +88,9 @@ module.exports = function(controller) {
           res.original = text.toLowerCase();
           res.translated = res.text.toLowerCase();
           resolve(String(res.original + ': ' + res.translated));
+          if (res == null) {
+            reject("problem translating word")
+          }
           //console.log(original + ' is ' + translated);
           // console.log(res.text);
           // => I speak English
