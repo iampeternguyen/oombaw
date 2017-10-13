@@ -77,7 +77,11 @@ function saveVocab(res, currentUser) {
 
           // double check if word is already saved
           let exists = 0;
+          found = 1;
+
           for (k in result.vocablist[i].sourceWord) {
+            console.log("checking list");
+            console.log(result.vocablist[i].sourceWord[k]);
             if (result.vocablist[i].sourceWord[k] == res.original)
               exists = 1;
           }
@@ -87,7 +91,6 @@ function saveVocab(res, currentUser) {
               targetWord: res.translated
             });
             result.save();
-            found = 1;
           }
 
 
