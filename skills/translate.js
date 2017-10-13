@@ -126,7 +126,7 @@ module.exports = function (controller) {
 
 
       controller.on('interactive_message_callback', function (bot, message) {
-        if (message.text == "yes") {
+        if (message.text == "yes" && message.callback_id == "yesno_callback") {
           oombawDB.saveVocab(res, currentUser);
           bot.replyInteractive(message, {
             text: ':thumbsup:',
@@ -139,7 +139,7 @@ module.exports = function (controller) {
             } else { }
           });
 
-        } else {
+        } else if (message.text == "no" && message.callback_id == "yesno_callback") {
           bot.replyInteractive(message, {
             text: "",
             replace_original: true,
