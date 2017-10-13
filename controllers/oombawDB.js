@@ -69,8 +69,6 @@ function saveVocab(res, currentUser) {
     if (result === null) {
       let err = 'could not save word';
     } else {
-      //TODO create function that checks if word is already added
-
       // searching for list
       let found = 0;
       for (i = 0; i < result.vocablist.length; i++) {
@@ -78,9 +76,7 @@ function saveVocab(res, currentUser) {
         if (result.vocablist[i].source == res.from.language.iso) {
 
           // double check if word is already saved
-          let userOBJ = result.toObject();
           let exists = 0;
-          result.vocablist[i].sourceWord.forEach('')
           for (k in result.vocablist[i].sourceWord) {
             if (result.vocablist[i].sourceWord[k] == res.original)
               exists = 1;
@@ -99,7 +95,7 @@ function saveVocab(res, currentUser) {
       }
       // if not found, add list to db and word to list
       if (found === 0) {
-        console.log('list not found');
+        console.log('list not found.. adding list ' + result.vocablist.length);
         let list = result.vocablist.length;
         result.vocablist[list] = {
           source: res.from.language.iso,
