@@ -97,76 +97,66 @@ module.exports = function (controller) {
   }
 
   function saveYesOrNo(currentUser, res, message) {
-    var bot = botController.spawn({
-      token: process.env.token
-    }).startRTM(function (err, bot, payload) {
-      if (!err) {
 
-        translate('Do you want to save this?', {
-          to: currentUser.translateTo
-        }).then(translatedMessage => {
-          bot.say({
-            user: currentUser.userID,
-            text: translatedMessage.text,
-            response_type: "ephemeral",
-            attachments: [{
-              text: "",
-              fallback: 'Yes or No?',
-              callback_id: 'yesno_callback',
-              actions: [{
-                name: 'answer',
-                text: ':thumbsup:',
-                type: 'button',
-                value: 'yes'
-              },
-              {
-                name: 'answer',
-                text: ':thumbsdown:',
-                type: 'button',
-                value: 'no'
-              }
-              ]
-            }]
+    translate('Do you want to save this?', {
+      to: currentUser.translateTo
+    }).then(translatedMessage => {
+      bot.whisper(message, {
+        user: currentUser.userID,
+        text: translatedMessage.text,
+        response_type: "ephemeral",
+        attachments: [{
+          text: "",
+          fallback: 'Yes or No?',
+          callback_id: 'yesno_callback',
+          actions: [{
+            name: 'answer',
+            text: ':thumbsup:',
+            type: 'button',
+            value: 'yes'
+          },
+          {
+            name: 'answer',
+            text: ':thumbsdown:',
+            type: 'button',
+            value: 'no'
+          }
+          ]
+        }]
+      });
+
+
+
+      controller.on('interactive_message_callback', function (bot, message) {
+        if (message.text == "yes" && message.callback_id == "yesno_callback") {
+          oombawDB.saveVocab(res, currentUser);
+          bot.replyInteractive(message, {
+            text: ":ok_hand:",
+            replace_original: true,
+            callback_id: 'yesno_callback',
+            response_type: 'ephemeral'
+          }, (err) => {
+            if (err) {
+              console.log(err);
+            } else { }
           });
 
-
-
-          controller.on('interactive_message_callback', function (bot, message) {
-            if (message.text == "yes" && message.callback_id == "yesno_callback") {
-              oombawDB.saveVocab(res, currentUser);
-              bot.replyInteractive(message, {
-                text: ":ok_hand:",
-                replace_original: true,
-                callback_id: 'yesno_callback',
-                response_type: 'ephemeral'
-              }, (err) => {
-                if (err) {
-                  console.log(err);
-                } else { }
-              });
-
-            } else if (message.text == "no" && message.callback_id == "yesno_callback") {
-              bot.replyInteractive(message, {
-                text: ":ok_hand:",
-                replace_original: true,
-                callback_id: 'yesno_callback',
-                response_type: 'ephemeral'
-              }, (err) => {
-                if (err) {
-                  console.log(err);
-                } else { }
-              });
-            }
-
+        } else if (message.text == "no" && message.callback_id == "yesno_callback") {
+          bot.replyInteractive(message, {
+            text: ":ok_hand:",
+            replace_original: true,
+            callback_id: 'yesno_callback',
+            response_type: 'ephemeral'
+          }, (err) => {
+            if (err) {
+              console.log(err);
+            } else { }
           });
+        }
 
-        });
+      });
 
-
-
-      }
     });
-
 
   }
 
