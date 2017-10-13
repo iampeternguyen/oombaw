@@ -79,11 +79,12 @@ function saveVocab(res, currentUser) {
           let exists = 0;
           found = 1;
           for (k in result.vocablist[i].vocab) {
-            console.log("checking list");
-            //console.log(result.vocablist[i].vocab[k].sourceWord);
+
             if (result.vocablist[i].vocab[k].sourceWord == res.original)
               exists = 1;
           }
+
+          // if not added, add word
           if (exists == 0) {
             result.vocablist[i].vocab.push({
               sourceWord: res.original,

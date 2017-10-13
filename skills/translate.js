@@ -33,35 +33,7 @@ module.exports = function (controller) {
               "name": "language_choice",
               "text": "Pick a language...",
               "type": "select",
-              "options": [{
-                "text": "Afrikaans",
-                "value": "af"
-              },
-              {
-                "text": "Albanian",
-                "value": "sq"
-              },
-              {
-                "text": "Arabic ",
-                "value": "ar"
-              },
-              {
-                "text": "Azerbaijani",
-                "value": "az"
-              },
-              {
-                "text": "Basque",
-                "value": "eu"
-              },
-              {
-                "text": "English",
-                "value": "en"
-              },
-              {
-                "text": "Vietnamese",
-                "value": "vi"
-              }
-              ]
+              "options": languages
             }]
           }]
         });
@@ -209,3 +181,36 @@ module.exports = function (controller) {
 
 
 }
+
+const languages = [
+  {
+    "text": "Afrikaans",
+    "value": "af"
+  },
+  {
+    "text": "Albanian",
+    "value": "sq"
+  },
+  {
+    "text": "Arabic ",
+    "value": "ar"
+  },
+  {
+    "text": "Azerbaijani",
+    "value": "az"
+  },
+  {
+    "text": "Basque",
+    "value": "eu"
+  },
+  {
+    "text": "English",
+    "value": "en"
+  },
+  {
+    "text": "Vietnamese",
+    "value": "vi"
+  }
+
+
+];
