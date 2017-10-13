@@ -21,19 +21,19 @@ module.exports = function (controller) {
       } else {
         let original = message.text;
         bot.replyPrivate(message, {
-          "text": "What language would you like to translate to?",
-          "response_type": "ephemeral",
-          "attachments": [{
+          text: "What language would you like to translate to?",
+          response_type: "ephemeral",
+          attachments: [{
             //"text": "Choose a language to translate to",
-            "fallback": "",
-            "color": "#3AA3E3",
-            "attachment_type": "default",
-            "callback_id": "language_selection",
-            "actions": [{
-              "name": "language_choice",
-              "text": "Pick a language...",
-              "type": "select",
-              "options": languages
+            fallback: "",
+            color: "#3AA3E3",
+            attachment_type: "default",
+            callback_id: "language_selection",
+            actions: [{
+              name: "language_choice",
+              text: "Pick a language...",
+              type: "select",
+              options: "languages"
             }]
           }]
         });
@@ -97,65 +97,76 @@ module.exports = function (controller) {
   }
 
   function saveYesOrNo(currentUser, res, message) {
-    translate('Do you want to save this?', {
-      to: currentUser.translateTo
-    }).then(translatedMessage => {
-      bot.say({
-        user: currentUser.userID,
-        text: translatedMessage.text,
-        response_type: "ephemeral",
-        attachments: [{
-          text: "",
-          fallback: 'Yes or No?',
-          callback_id: 'yesno_callback',
-          actions: [{
-            name: 'answer',
-            text: ':thumbsup:',
-            type: 'button',
-            value: 'yes'
-          },
-          {
-            name: 'answer',
-            text: ':thumbsdown:',
-            type: 'button',
-            value: 'no'
-          }
-          ]
-        }]
-      });
+    var bot = botController.spawn({
+      token: process.env.token
+    }).startRTM(function (err, bot, payload) {
+      if (!err) {
 
-
-
-      controller.on('interactive_message_callback', function (bot, message) {
-        if (message.text == "yes" && message.callback_id == "yesno_callback") {
-          oombawDB.saveVocab(res, currentUser);
-          bot.replyInteractive(message, {
-            text: ":ok_hand:",
-            replace_original: true,
-            callback_id: 'yesno_callback',
-            response_type: 'ephemeral'
-          }, (err) => {
-            if (err) {
-              console.log(err);
-            } else { }
+        translate('Do you want to save this?', {
+          to: currentUser.translateTo
+        }).then(translatedMessage => {
+          bot.say({
+            user: currentUser.userID,
+            text: translatedMessage.text,
+            response_type: "ephemeral",
+            attachments: [{
+              text: "",
+              fallback: 'Yes or No?',
+              callback_id: 'yesno_callback',
+              actions: [{
+                name: 'answer',
+                text: ':thumbsup:',
+                type: 'button',
+                value: 'yes'
+              },
+              {
+                name: 'answer',
+                text: ':thumbsdown:',
+                type: 'button',
+                value: 'no'
+              }
+              ]
+            }]
           });
 
-        } else if (message.text == "no" && message.callback_id == "yesno_callback") {
-          bot.replyInteractive(message, {
-            text: ":ok_hand:",
-            replace_original: true,
-            callback_id: 'yesno_callback',
-            response_type: 'ephemeral'
-          }, (err) => {
-            if (err) {
-              console.log(err);
-            } else { }
+
+
+          controller.on('interactive_message_callback', function (bot, message) {
+            if (message.text == "yes" && message.callback_id == "yesno_callback") {
+              oombawDB.saveVocab(res, currentUser);
+              bot.replyInteractive(message, {
+                text: ":ok_hand:",
+                replace_original: true,
+                callback_id: 'yesno_callback',
+                response_type: 'ephemeral'
+              }, (err) => {
+                if (err) {
+                  console.log(err);
+                } else { }
+              });
+
+            } else if (message.text == "no" && message.callback_id == "yesno_callback") {
+              bot.replyInteractive(message, {
+                text: ":ok_hand:",
+                replace_original: true,
+                callback_id: 'yesno_callback',
+                response_type: 'ephemeral'
+              }, (err) => {
+                if (err) {
+                  console.log(err);
+                } else { }
+              });
+            }
+
           });
-        }
 
-      });
+        });
 
+
+
+      }
     });
+
 
   }
 
