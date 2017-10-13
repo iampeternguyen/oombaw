@@ -78,11 +78,10 @@ function saveVocab(res, currentUser) {
           // double check if word is already saved
           let exists = 0;
           found = 1;
-          console.log(result.vocablist[i].vocab);
           for (k in result.vocablist[i].vocab) {
             console.log("checking list");
-            console.log(result.vocablist[i].vocab[k]);
-            if (result.vocablist[i].vocab[k] == res.original)
+            //console.log(result.vocablist[i].vocab[k].sourceWord);
+            if (result.vocablist[i].vocab[k].sourceWord == res.original)
               exists = 1;
           }
           if (exists == 0) {
