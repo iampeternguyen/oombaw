@@ -70,10 +70,38 @@ function saveVocab(res, currentUser) {
       let err = 'could not save word';
     } else {
       //TODO create function that checks if word is already added
-      //TODO create function that checks if list is already added
-      if (result.vocablist.length === 0) {
-        //initializing list
-        result.vocablist[0] = {
+
+      // searching for list
+      let found = 0;
+      for (i = 0; i < result.vocablist.length; i++) {
+        // if found then add to list
+        if (result.vocablist[i].source == res.from.language.iso) {
+
+          // double check if word is already saved
+          let userOBJ = result.toObject();
+          let exists = 0;
+          result.vocablist[i].sourceWord.forEach('')
+          for (k in result.vocablist[i].sourceWord) {
+            if (result.vocablist[i].sourceWord[k] == res.original)
+              exists = 1;
+          }
+          if (exists == 0) {
+            result.vocablist[i].vocab.push({
+              sourceWord: res.original,
+              targetWord: res.translated
+            });
+            result.save();
+            found = 1;
+          }
+
+
+        }
+      }
+      // if not found, add list to db and word to list
+      if (found === 0) {
+        console.log('list not found');
+        let list = result.vocablist.length;
+        result.vocablist[list] = {
           source: res.from.language.iso,
           target: result.translateTo,
           vocab: [{
@@ -82,36 +110,9 @@ function saveVocab(res, currentUser) {
           }]
         };
         result.save();
-      } else {
-        // searching for if vocab list already exists
-        let found = 0;
-        for (i = 0; i < result.vocablist.length; i++) {
-          // if found then add to list
-          if (result.vocablist[i].source == res.from.language.iso) {
-            result.vocablist[i].vocab.push({
-              sourceWord: res.original,
-              targetWord: res.translated
-            });
-            result.save();
-            found = 1;
 
-          }
-        }
-        // if not found, add list to db and word to list
-        if (found === 0) {
-          console.log('list not found');
-          result.vocablist[result.vocablist.length] = {
-            source: res.from.language.iso,
-            target: result.translateTo,
-            vocab: [{
-              sourceWord: res.original,
-              targetWord: res.translated
-            }]
-          };
-          result.save();
-
-        }
       }
+
 
     }
   }).catch(err => {

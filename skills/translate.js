@@ -151,7 +151,6 @@ module.exports = function (controller) {
 
 
 
-
       controller.on('interactive_message_callback', function (bot, message) {
         //bot.whisper(message, 'preferences saved ' + original);
         if (message.text == "yes") {
