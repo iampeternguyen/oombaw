@@ -67,27 +67,30 @@ module.exports = function (controller) {
         });
 
         controller.on('interactive_message_callback', function (bot, message) {
-
           //bot.whisper(message, 'preferences saved ' + original);
-          bot.replyInteractive(message, {
-            text: res.original + ": " + res.translated,
-            replace_original: true,
-            callback_id: 'language_selection',
-            response_type: 'ephemeral'
-          }, (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('Experiment finished')
-              oombawDB.addUserPref(message, message.text).then(currentUser => {
-                translateWord(currentUser, original).then(res => {
-                  //bot.whisper(message, res);
-                  saveYesOrNo(currentUser, res, message);
-                });
-              });
-            }
-          });
+          if (message.callback_id == "language_selection") {
+            oombawDB.addUserPref(message, message.text).then(currentUser => {
 
+              translateWord(currentUser, original).then(res => {
+
+                bot.replyInteractive(message, {
+                  text: res.original + ": " + res.translated,
+                  replace_original: true,
+                  callback_id: 'language_selection',
+                  response_type: 'ephemeral'
+                }, (err) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log('Experiment finished')
+                  }
+                });
+                //bot.whisper(message, res);
+                saveYesOrNo(currentUser, res, message);
+
+              });
+            });
+          }
 
         });
       }
