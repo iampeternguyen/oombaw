@@ -129,7 +129,7 @@ module.exports = function (controller) {
         if (message.text == "yes" && message.callback_id == "yesno_callback") {
           oombawDB.saveVocab(res, currentUser);
           bot.replyInteractive(message, {
-            text: ':thumbsup:',
+            text: ":ok_hand:",
             replace_original: true,
             callback_id: 'yesno_callback',
             response_type: 'ephemeral'
@@ -141,7 +141,7 @@ module.exports = function (controller) {
 
         } else if (message.text == "no" && message.callback_id == "yesno_callback") {
           bot.replyInteractive(message, {
-            text: "",
+            text: ":ok_hand:",
             replace_original: true,
             callback_id: 'yesno_callback',
             response_type: 'ephemeral'
