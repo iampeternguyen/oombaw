@@ -129,7 +129,7 @@ module.exports = function (controller) {
         if (message.text == "yes") {
           oombawDB.saveVocab(res, currentUser);
           bot.replyInteractive(message, {
-            text: ":thumbsup",
+            text: ':thumbsup:',
             replace_original: true,
             callback_id: 'yesno_callback',
             response_type: 'ephemeral'
