@@ -33,7 +33,7 @@ module.exports = function (controller) {
               name: "language_choice",
               text: "Pick a language...",
               type: "select",
-              options: "languages"
+              options: languages
             }]
           }]
         });
