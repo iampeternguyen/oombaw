@@ -127,7 +127,7 @@ module.exports = function (controller) {
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
-      bot.sendEphemeral(message, {
+      bot.whisper(message, {
         user: currentUser.userID,
         text: translatedMessage.text,
         attachments: [{
