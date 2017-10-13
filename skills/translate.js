@@ -1,13 +1,13 @@
 const translate = require('google-translate-api-extended');
 const oombawDB = require('../controllers/oombawDB');
 
-module.exports = function(controller) {
+module.exports = function (controller) {
 
   // add event handlers to controller
   // such as hears handlers that match triggers defined in code
   // or controller.studio.before, validate, and after which tie into triggers
   // defined in the Botkit Studio UI.
-  controller.on('slash_command', function(bot, message) {
+  controller.on('slash_command', function (bot, message) {
     // reply to slash command
     oombawDB.checkAddUser(message).then(currentUser => {
       let userObj = currentUser.toObject();
@@ -16,7 +16,7 @@ module.exports = function(controller) {
         let original = message.text;
         translateWord(currentUser, original).then(res => {
           bot.replyPrivate(message, res.original + ": " + res.translated);
-          saveYesOrNo(currentUser, res);
+          saveYesOrNo(currentUser, res, message);
         });
       } else {
         let original = message.text;
@@ -34,39 +34,39 @@ module.exports = function(controller) {
               "text": "Pick a language...",
               "type": "select",
               "options": [{
-                  "text": "Afrikaans",
-                  "value": "af"
-                },
-                {
-                  "text": "Albanian",
-                  "value": "sq"
-                },
-                {
-                  "text": "Arabic ",
-                  "value": "ar"
-                },
-                {
-                  "text": "Azerbaijani",
-                  "value": "az"
-                },
-                {
-                  "text": "Basque",
-                  "value": "eu"
-                },
-                {
-                  "text": "English",
-                  "value": "en"
-                },
-                {
-                  "text": "Vietnamese",
-                  "value": "vi"
-                }
+                "text": "Afrikaans",
+                "value": "af"
+              },
+              {
+                "text": "Albanian",
+                "value": "sq"
+              },
+              {
+                "text": "Arabic ",
+                "value": "ar"
+              },
+              {
+                "text": "Azerbaijani",
+                "value": "az"
+              },
+              {
+                "text": "Basque",
+                "value": "eu"
+              },
+              {
+                "text": "English",
+                "value": "en"
+              },
+              {
+                "text": "Vietnamese",
+                "value": "vi"
+              }
               ]
             }]
           }]
         });
 
-        controller.on('interactive_message_callback', function(bot, message) {
+        controller.on('interactive_message_callback', function (bot, message) {
           //bot.whisper(message, 'preferences saved ' + original);
 
           oombawDB.addUserPref(message, message.text).then(currentUser => {
@@ -86,7 +86,7 @@ module.exports = function(controller) {
                 }
               });
               //bot.whisper(message, res);
-              saveYesOrNo(currentUser, res);
+              saveYesOrNo(currentUser, res, message);
 
             });
           });
@@ -100,8 +100,8 @@ module.exports = function(controller) {
   function translateWord(currentUser, text) {
     return new Promise((resolve, reject) => {
       translate(text, {
-          to: currentUser.translateTo
-        })
+        to: currentUser.translateTo
+      })
         .then(res => {
           if (res == null) {
             reject("cannot translate word")
@@ -122,12 +122,12 @@ module.exports = function(controller) {
     });
   }
 
-  function saveYesOrNo(currentUser, res) {
+  function saveYesOrNo(currentUser, res, message) {
     // TODO Fix this
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
-      bot.sendEphemeral({
+      bot.sendEphemeral(message, {
         user: currentUser.userID,
         text: translatedMessage.text,
         attachments: [{
@@ -135,17 +135,17 @@ module.exports = function(controller) {
           fallback: 'Yes or No?',
           callback_id: 'yesno_callback',
           actions: [{
-              name: 'answer',
-              text: ':thumbsup:',
-              type: 'button',
-              value: 'yes'
-            },
-            {
-              name: 'answer',
-              text: ':thumbsdown:',
-              type: 'button',
-              value: 'no'
-            }
+            name: 'answer',
+            text: ':thumbsup:',
+            type: 'button',
+            value: 'yes'
+          },
+          {
+            name: 'answer',
+            text: ':thumbsdown:',
+            type: 'button',
+            value: 'no'
+          }
           ]
         }]
       });
@@ -153,7 +153,7 @@ module.exports = function(controller) {
 
 
 
-      controller.on('interactive_message_callback', function(bot, message) {
+      controller.on('interactive_message_callback', function (bot, message) {
         //bot.whisper(message, 'preferences saved ' + original);
         if (message.text == "yes") {
           bot.replyInteractive(message, {
@@ -164,7 +164,7 @@ module.exports = function(controller) {
           }, (err) => {
             if (err) {
               console.log(err);
-            } else {}
+            } else { }
           });
         } else {
           bot.replyInteractive(message, {
@@ -175,7 +175,7 @@ module.exports = function(controller) {
           }, (err) => {
             if (err) {
               console.log(err);
-            } else {}
+            } else { }
           });
         }
 
