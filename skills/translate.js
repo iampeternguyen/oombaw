@@ -123,7 +123,6 @@ module.exports = function (controller) {
   }
 
   function saveYesOrNo(currentUser, res, message) {
-    // TODO Fix this
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
@@ -131,7 +130,7 @@ module.exports = function (controller) {
         user: currentUser.userID,
         text: translatedMessage.text,
         attachments: [{
-          text: translatedMessage.text,
+          text: "",
           fallback: 'Yes or No?',
           callback_id: 'yesno_callback',
           actions: [{
@@ -156,6 +155,7 @@ module.exports = function (controller) {
       controller.on('interactive_message_callback', function (bot, message) {
         //bot.whisper(message, 'preferences saved ' + original);
         if (message.text == "yes") {
+          oombawDB.saveVocab(res, currentUser);
           bot.replyInteractive(message, {
             text: "saving",
             replace_original: true,
@@ -166,6 +166,7 @@ module.exports = function (controller) {
               console.log(err);
             } else { }
           });
+
         } else {
           bot.replyInteractive(message, {
             text: "not saving",

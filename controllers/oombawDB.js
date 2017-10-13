@@ -11,31 +11,31 @@ module.exports = {
 //
 function checkAddUser(message) {
   return new Promise((resolve, reject) => {
-      User.findOne({
-        teamID: message.team_id,
-        userID: message.user_id
-      }).then(result => {
-        if (result === null) {
-          var regUser = new User({
-            teamID: message.team_id,
-            userID: message.user_id
-          });
+    User.findOne({
+      teamID: message.team_id,
+      userID: message.user_id
+    }).then(result => {
+      if (result === null) {
+        var regUser = new User({
+          teamID: message.team_id,
+          userID: message.user_id
+        });
 
-          regUser.save().then(() => {
-            resolve(regUser);
-          });
-          //console.log("new user added");
+        regUser.save().then(() => {
+          resolve(regUser);
+        });
+        //console.log("new user added");
 
 
-        } else {
-          //console.log("already added");
-          resolve(result);
-        }
-      }).catch(err => {
-        console.error(err);
-        reject(new Error(err));
-      });
-    }
+      } else {
+        //console.log("already added");
+        resolve(result);
+      }
+    }).catch(err => {
+      console.error(err);
+      reject(new Error(err));
+    });
+  }
 
   );
 
@@ -60,11 +60,11 @@ function addUserPref(message, value) {
   });
 }
 
-function saveVocab(google, message, original, translated) {
-  console.log('saving' + original + ' as ' + translated);
+function saveVocab(res, currentUser) {
+  console.log('saving' + res.original + ' as ' + res.translated);
   User.findOne({
-    teamID: message.team.id,
-    userID: message.user.id,
+    teamID: currentUser.teamID,
+    userID: currentUser.userID,
   }).then(result => {
     if (result === null) {
       let err = 'could not save word';
@@ -74,36 +74,38 @@ function saveVocab(google, message, original, translated) {
       if (result.vocablist.length === 0) {
         //initializing list
         result.vocablist[0] = {
-          source: google.from.language.iso,
+          source: res.from.language.iso,
           target: result.translateTo,
           vocab: [{
-            sourceWord: original,
-            targetWord: translated
+            sourceWord: res.original,
+            targetWord: res.translated
           }]
         };
         result.save();
       } else {
-        var found = 0;
+        // searching for if vocab list already exists
+        let found = 0;
         for (i = 0; i < result.vocablist.length; i++) {
-
-          if (result.vocablist[i].source == google.from.language.iso) {
+          // if found then add to list
+          if (result.vocablist[i].source == res.from.language.iso) {
             result.vocablist[i].vocab.push({
-              sourceWord: original,
-              targetWord: translated
+              sourceWord: res.original,
+              targetWord: res.translated
             });
             result.save();
             found = 1;
 
           }
         }
+        // if not found, add list to db and word to list
         if (found === 0) {
           console.log('list not found');
           result.vocablist[result.vocablist.length] = {
-            source: google.from.language.iso,
+            source: res.from.language.iso,
             target: result.translateTo,
             vocab: [{
-              sourceWord: original,
-              targetWord: translated
+              sourceWord: res.original,
+              targetWord: res.translated
             }]
           };
           result.save();
