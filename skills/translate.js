@@ -100,9 +100,10 @@ module.exports = function (controller) {
     translate('Do you want to save this?', {
       to: currentUser.translateTo
     }).then(translatedMessage => {
-      bot.say(message, {
+      bot.say({
         user: currentUser.userID,
         text: translatedMessage.text,
+        response_type: "ephemeral",
         attachments: [{
           text: "",
           fallback: 'Yes or No?',
