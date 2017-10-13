@@ -126,11 +126,10 @@ module.exports = function (controller) {
 
 
       controller.on('interactive_message_callback', function (bot, message) {
-        //bot.whisper(message, 'preferences saved ' + original);
-        if (message.text == "yes") {
+        if (message.text == "yes" && message.callback_id == "yesno_callback") {
           oombawDB.saveVocab(res, currentUser);
           bot.replyInteractive(message, {
-            text: "saving",
+            text: ":thumbsup",
             replace_original: true,
             callback_id: 'yesno_callback',
             response_type: 'ephemeral'
@@ -142,7 +141,7 @@ module.exports = function (controller) {
 
         } else {
           bot.replyInteractive(message, {
-            text: "not saving",
+            text: "",
             replace_original: true,
             callback_id: 'yesno_callback',
             response_type: 'ephemeral'
@@ -153,28 +152,8 @@ module.exports = function (controller) {
           });
         }
 
-
-
-        //bot.whisper(message, res);
       });
 
-
-      //   //TODO not getting updated
-      //   console.log('original before sending is ' + res.original);
-      //   slapp.action('yesno_callback', 'answer', (msg, value) => {
-      //     if (value == 'yes') {
-      //       console.log('sending original ' + res.original);
-      //       //console.log(msg);
-      //       oombawDB.saveVocab(res, msg, res.original, res.translated);
-      //       msg.respond(msg.body.response_url, `:thumbsup:`);
-      //     } else {
-      //       console.log('not saving');
-      //       msg.respond(msg.body.response_url, `:thumbsdown:`);
-      //     }
-      //   });
-      // })
-      // .catch(err => {
-      //   console.error(err);
     });
 
   }
