@@ -58,7 +58,9 @@ function addUserPref(message, value) {
         translate("Do you want to save this?", {
           to: result.translateTo
         }).then(savedMSG => {
-          result.messages.saved = savedMSG;
+          result.messages = {
+            saved: savedMSG
+          }
 
           result.save().then(() => {
             resolve(result);
