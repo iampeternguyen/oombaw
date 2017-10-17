@@ -55,12 +55,15 @@ function addUserPref(message, value) {
         reject(err);
       } else {
         result.translateTo = value;
-        result.message.saved = translate("Do you want to save this?", {
+        translate("Do you want to save this?", {
           to: result.translateTo
+        }).then(savedMSG => {
+          result.message.saved = savedMSG;
+          result.save().then(() => {
+            resolve(result);
+          });
         })
-        result.save().then(() => {
-          resolve(result);
-        });
+
       }
     });
   });
