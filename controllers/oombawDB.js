@@ -136,8 +136,7 @@ function getUser(message) {
         reject(err);
       } else {
         resolve(result);
-        });
       }
-    });
-  });
+    })
+  })
 }
