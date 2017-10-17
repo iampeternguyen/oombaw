@@ -1,6 +1,8 @@
 const assert = require('assert');
 const mongoose = require('mongoose');
 const User = require('../models/user');
+const translate = require('google-translate-api-extended');
+
 
 mongoose.Promise = global.Promise;
 module.exports = {
