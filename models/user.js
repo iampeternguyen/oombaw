@@ -22,6 +22,7 @@ const UserSchema = new Schema({
   teamID: String,
   userID: String,
   translateTo: String,
+  messages: {},
   vocablist: [VocabListSchema]
 });
 

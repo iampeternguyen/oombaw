@@ -6,7 +6,8 @@ mongoose.Promise = global.Promise;
 module.exports = {
   checkAddUser: checkAddUser,
   addUserPref: addUserPref,
-  saveVocab: saveVocab
+  saveVocab: saveVocab,
+  getuser: getUser
 };
 //
 function checkAddUser(message) {
@@ -52,6 +53,9 @@ function addUserPref(message, value) {
         reject(err);
       } else {
         result.translateTo = value;
+        result.message.saved = translate("Do you want to save this?", {
+          to: result.translateTo
+        })
         result.save().then(() => {
           resolve(result);
         });
@@ -119,4 +123,21 @@ function saveVocab(res, currentUser) {
     console.log(err);
   });
 
+}
+
+function getUser(message) {
+  return new Promise((resolve, reject) => {
+    User.findOne({
+      teamID: message.team.id,
+      userID: message.user,
+    }).then(result => {
+      if (result === null) {
+        let err = 'could not find user';
+        reject(err);
+      } else {
+        resolve(result);
+        });
+      }
+    });
+  });
 }
