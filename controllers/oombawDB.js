@@ -57,9 +57,8 @@ function addUserPref(message, value) {
         reject(err);
       } else {
         result.translateTo = value;
-        result.messages = {
-          save: helper.translateMessage("Do you want to save this?", result)
-        }
+        result.messages['saved'] = helper.translateMessage("Do you want to save this?", result)
+        console.log(result.messages.saved)
 
 
 

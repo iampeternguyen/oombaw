@@ -13,6 +13,7 @@ function translateMessage(text, user) {
       to: user.translateTo
     }).then(translated => {
       if (translated) {
+        console.log(translated)
         resolve(translated)
       } else {
         reject(null)
