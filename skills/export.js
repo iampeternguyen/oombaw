@@ -2,7 +2,7 @@ const translate = require('google-translate-api-extended');
 const oombawDB = require('../controllers/oombawDB');
 const json2csv = require('json2csv');
 const fs = require('fs');
-
+const del = require('delete');
 
 module.exports = function(controller) {
   controller.hears(['export'], 'direct_message,direct_mention', (bot, message) => {
@@ -43,11 +43,11 @@ module.exports = function(controller) {
             }, function(err, csv) {
               if (err) console.log(err);
               //console.log(csv);
-              fs.writeFile(__dirname + '/../public/lists/' + message.user + '.csv', csv, (err) => {
+              fs.writeFile(__dirname + '/../public/' + message.user + '.csv', csv, (err) => {
                 if (err)
                   throw err;
                 console.log(message.user + '.csv saved.')
-                url = 'http://oombaw.herokuapp.com/lists/' + message.user + '.csv';
+                url = 'http://oombaw.herokuapp.com/' + message.user + '.csv';
                 bot.replyInteractive(message, {
                   text: "Download vocab list here: " + url,
                   replace_original: true,
