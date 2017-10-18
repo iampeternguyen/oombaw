@@ -18,7 +18,7 @@ module.exports = function(controller) {
       bot.startConversation(message, (err, convo) => {
         convo.ask({
           user: currentUser.userID,
-          text: translatedMessage.text,
+          text: "Which list would you like to export?",
           response_type: "ephemeral",
           attachments: [{
             text: "",
