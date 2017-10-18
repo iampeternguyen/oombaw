@@ -1,6 +1,7 @@
 const translate = require('google-translate-api-extended');
 const oombawDB = require('../controllers/oombawDB');
 const json2csv = require('json2csv');
+const fs = require('fs');
 
 module.exports = function(controller) {
   controller.hears(['export'], 'direct_message,direct_mention', (bot, message) => {
@@ -41,6 +42,12 @@ module.exports = function(controller) {
               if (err) console.log(err);
               console.log(csv);
             });
+
+            fs.writeFile('../public/' + message.user + '.csv', csv, (err) => {
+              if (err)
+                throw err;
+              console.log(message.user + '.csv saved.')
+            })
             bot.replyInteractive(message, {
               text: ":ok_hand:",
               replace_original: true,
