@@ -2,12 +2,12 @@ const translate = require('google-translate-api-extended');
 
 
 module.exports = {
-  translate: translate,
+  translateMessage: translateMessage,
 
 };
 //
 
-function translate(text, user) {
+function translateMessage(text, user) {
   return new Promise((resolve, reject) => {
     translate(text, {
       to: user.translateTo
