@@ -11,7 +11,7 @@ module.exports = {
   checkAddUser: checkAddUser,
   addUserPref: addUserPref,
   saveVocab: saveVocab,
-  getuser: getUser
+  getUser: getUser
 };
 //
 function checkAddUser(message) {
