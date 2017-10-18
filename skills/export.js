@@ -33,8 +33,10 @@ module.exports = function(controller) {
         if (message.callback_id == "export_callback") {
           oombawDB.getVocabList(message).then(JSONlist => {
             // TODO export list function. how to get JSON to csv? and clickable
+            let fields = ['sourceWord', 'targetWord', 'date'];
             json2csv({
-              data: JSONlist
+              data: JSONlist,
+              fields: fields
             }, function(err, csv) {
               if (err) console.log(err);
               console.log(csv);
