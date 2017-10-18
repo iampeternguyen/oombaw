@@ -1,5 +1,6 @@
 const translate = require('google-translate-api-extended');
 const oombawDB = require('../controllers/oombawDB');
+const json2csv = require('json2csv');
 
 module.exports = function(controller) {
   controller.hears(['export'], 'direct_message,direct_mention', (bot, message) => {
@@ -30,9 +31,14 @@ module.exports = function(controller) {
 
       controller.on('interactive_message_callback', function(bot, message) {
         if (message.callback_id == "export_callback") {
-          // TODO get JSON of vocab list
-          oombawDB.getVocabList(message).then(result => {
-            // TODO export list 
+          oombawDB.getVocabList(message).then(JSONlist => {
+            // TODO export list function. how to get JSON to csv? and clickable
+            json2csv({
+              data: JSONlist
+            }, function(err, csv) {
+              if (err) console.log(err);
+              console.log(csv);
+            });
             bot.replyInteractive(message, {
               text: ":ok_hand:",
               replace_original: true,
