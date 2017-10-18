@@ -2,6 +2,8 @@ const assert = require('assert');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const translate = require('google-translate-api-extended');
+const helper = require('../controllers/helper');
+
 
 
 mongoose.Promise = global.Promise;
@@ -55,19 +57,16 @@ function addUserPref(message, value) {
         reject(err);
       } else {
         result.translateTo = value;
-        translate("Do you want to save this?", {
-          to: result.translateTo
-        }).then(savedMSG => {
-          result.messages = {
-            saved: savedMSG.text // TODO make sure this works
-          }
+        result.messages = {
+          save: helper.translate("Do you want to save this?", result)
+        }
 
           // TODO Build separate translate function that returns translated phrase. 
           // TODO translate phrases for help, exporting, changing saving preferences
 
-          result.save().then(() => {
-            resolve(result);
-          });
+        result.save().then(() => {
+          resolve(result);
+        });
         })
 
       }
