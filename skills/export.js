@@ -3,9 +3,9 @@ const oombawDB = require('../controllers/oombawDB');
 
 module.exports = function(controller) {
   controller.hears(['export'], 'direct_message,direct_mention', (bot, message) => {
-    let currentUser = oombawDB.getUser(message).toObject()
+    let currentUser = oombawDB.getUser(message) //.toObject()
     let vocabArray = []
-    for (i = 0; i < currentUser.vocabList.length; i++) {
+    for (i = 0; i < currentUser.vocablist.length; i++) {
       vocabArray.push({
         name: 'answer',
         text: currentUser.vocabList[i].source,
