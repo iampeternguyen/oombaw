@@ -137,6 +137,7 @@ function saveVocab(res, currentUser) {
 }
 
 function getUser(message) {
+  console.log(message)
   return new Promise((resolve, reject) => {
     User.findOne({
       teamID: message.team.id,
