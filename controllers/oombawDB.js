@@ -61,13 +61,15 @@ function addUserPref(message, value) {
           save: helper.translate("Do you want to save this?", result)
         }
 
-          // TODO Build separate translate function that returns translated phrase. 
-          // TODO translate phrases for help, exporting, changing saving preferences
+
+
+        // TODO Build separate translate function that returns translated phrase. 
+        // TODO translate phrases for help, exporting, changing saving preferences
 
         result.save().then(() => {
           resolve(result);
         });
-        })
+
 
       }
     });
