@@ -140,7 +140,7 @@ function getUser(message) {
   console.log(message)
   return new Promise((resolve, reject) => {
     User.findOne({
-      teamID: message.team.id,
+      teamID: message.team_id || mesage.team.id,
       userID: message.user,
     }).then(result => {
       if (result === null) {
