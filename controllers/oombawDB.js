@@ -59,8 +59,11 @@ function addUserPref(message, value) {
           to: result.translateTo
         }).then(savedMSG => {
           result.messages = {
-            saved: savedMSG
+            saved: savedMSG.text // TODO make sure this works
           }
+
+          // TODO Build separate translate function that returns translated phrase. 
+          // TODO translate phrases for help, exporting, changing saving preferences
 
           result.save().then(() => {
             resolve(result);
