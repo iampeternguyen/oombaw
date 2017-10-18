@@ -1,7 +1,6 @@
 const translate = require('google-translate-api-extended');
 
 
-mongoose.Promise = global.Promise;
 module.exports = {
   translate: translate,
 
