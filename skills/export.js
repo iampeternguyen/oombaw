@@ -41,7 +41,7 @@ module.exports = function(controller) {
             }, function(err, csv) {
               if (err) console.log(err);
               //console.log(csv);
-              fs.writeFile('../public/' + message.user + '.csv', csv, (err) => {
+              fs.writeFile(__dirname + '/../public/' + message.user + '.csv', csv, (err) => {
                 if (err)
                   throw err;
                 console.log(message.user + '.csv saved.')
