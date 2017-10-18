@@ -48,6 +48,13 @@ module.exports = function(controller) {
                   throw err;
                 console.log(message.user + '.csv saved.')
                 url = 'http://oombaw.herokuapp.com/' + message.user + '.csv';
+                // delete file after 5 minutes
+                setTimeout(del([__dirname + '/../public/' + message.user + '.csv'], (err, deleted) => {
+                  if (err)
+                    throw err;
+                  console.log(deleted)
+                }), 1);
+                // reply to message 
                 bot.replyInteractive(message, {
                   text: "Download vocab list here: " + url,
                   replace_original: true,
