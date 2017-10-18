@@ -4,8 +4,6 @@ const oombawDB = require('../controllers/oombawDB');
 module.exports = function(controller) {
   controller.hears(['export'], 'direct_message,direct_mention', (bot, message) => {
     oombawDB.getUser(message).then(currentUser => {
-      console.log(currentUser)
-      console.log(currentUser.vocabList)
       let vocabArray = []
       for (i = 0; i < currentUser.vocabList.length; i++) {
         vocabArray.push({
@@ -15,7 +13,6 @@ module.exports = function(controller) {
           value: i
         })
       }
-      console.log(vocabArray)
 
       bot.startConversation(message, (err, convo) => {
         convo.ask({
@@ -24,12 +21,34 @@ module.exports = function(controller) {
           response_type: "ephemeral",
           attachments: [{
             text: "",
-            fallback: 'Yes or No?',
-            callback_id: 'yesno_callback',
+            fallback: 'Which list?',
+            callback_id: 'export_callback',
             actions: vocabArray
           }]
         })
       })
+
+      controller.on('interactive_message_callback', function(bot, message) {
+        if (message.callback_id == "export_callback") {
+          // TODO get JSON of vocab list
+          oombawDB.getVocabList(message).then(result => {
+            // TODO export list 
+            bot.replyInteractive(message, {
+              text: ":ok_hand:",
+              replace_original: true,
+              callback_id: 'export_callback',
+              response_type: 'ephemeral'
+            }, (err) => {
+              if (err) {
+                console.log(err);
+              } else {
+              }
+            });
+          })
+
+        }
+
+      });
 
     })
 

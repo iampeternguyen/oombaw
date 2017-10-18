@@ -11,7 +11,8 @@ module.exports = {
   checkAddUser: checkAddUser,
   addUserPref: addUserPref,
   saveVocab: saveVocab,
-  getUser: getUser
+  getUser: getUser,
+  getVocabList: getVocabList
 };
 //
 function checkAddUser(message) {
@@ -148,6 +149,16 @@ function getUser(message) {
       } else {
         resolve(result);
       }
+    })
+  })
+}
+
+function getVocabList(message) {
+  return new Promise((resolve, reject) => {
+    getUser(message).then(currentUser => {
+      let JSONlist = currentUser.vocabList[message.text].vocab
+      console.log(JSONlist)
+      resolve(JSONlist)
     })
   })
 }
