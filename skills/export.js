@@ -47,21 +47,22 @@ module.exports = function(controller) {
                   throw err;
                 console.log(message.user + '.csv saved.')
                 url = 'http://oombaw.herokuapp.com/' + message.user + '.csv';
+                bot.replyInteractive(message, {
+                  text: "Download vocab list here: " + url,
+                  replace_original: true,
+                  callback_id: 'export_callback',
+                  response_type: 'ephemeral'
+                }, (err) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                  }
+                });
               })
             });
 
 
-            bot.replyInteractive(message, {
-              text: "Download vocab list here: " + url,
-              replace_original: true,
-              callback_id: 'export_callback',
-              response_type: 'ephemeral'
-            }, (err) => {
-              if (err) {
-                console.log(err);
-              } else {
-              }
-            });
+
           })
 
         }
