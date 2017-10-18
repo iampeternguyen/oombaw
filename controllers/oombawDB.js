@@ -57,15 +57,13 @@ function addUserPref(message, value) {
         reject(err);
       } else {
         result.translateTo = value;
-        result.messages = {
-          saved: helper.translateMessage("Do you want to save this?", result)
-        }
-        console.log(result.messages.saved)
-
-
 
         // TODO Build separate translate function that returns translated phrase. 
         // TODO translate phrases for help, exporting, changing saving preferences
+        // result.messages = {
+        //   saved: helper.translateMessage("Do you want to save this?", result)
+        // }
+        // console.log(result.messages.saved)
 
         result.save().then(() => {
           resolve(result);
