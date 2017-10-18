@@ -140,7 +140,7 @@ function saveVocab(res, currentUser) {
 function getUser(message) {
   return new Promise((resolve, reject) => {
     User.findOne({
-      teamID: message.team_id || mesage.team.id,
+      teamID: message.team_id || message.team.id,
       userID: message.user,
     }).then(result => {
       if (result === null) {
@@ -154,6 +154,7 @@ function getUser(message) {
 }
 
 function getVocabList(message) {
+  console.log(message)
   return new Promise((resolve, reject) => {
     getUser(message).then(currentUser => {
       let JSONlist = currentUser.vocabList[message.text].vocab
