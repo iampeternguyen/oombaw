@@ -154,10 +154,9 @@ function getUser(message) {
 }
 
 function getVocabList(message) {
-  console.log(message)
   return new Promise((resolve, reject) => {
     getUser(message).then(currentUser => {
-      let JSONlist = currentUser.vocabList[message.text].vocab
+      let JSONlist = JSON.stringify(currentUser.vocabList[message.text].vocab)
       console.log(JSONlist)
       resolve(JSONlist)
     })
