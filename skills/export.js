@@ -2,7 +2,7 @@ const translate = require('google-translate-api-extended');
 const oombawDB = require('../controllers/oombawDB');
 const json2csv = require('json2csv');
 const fs = require('fs');
-const findRemoveSync = require('find-remove');
+
 
 module.exports = function(controller) {
   controller.hears(['export'], 'direct_message,direct_mention', (bot, message) => {
@@ -73,5 +73,6 @@ module.exports = function(controller) {
     })
 
   })
+
 
 }
