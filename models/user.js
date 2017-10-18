@@ -23,7 +23,7 @@ const UserSchema = new Schema({
   userID: String,
   translateTo: String,
   messages: {},
-  vocablist: [VocabListSchema]
+  vocabList: [VocabListSchema]
 });
 
 const User = mongoose.model('user', UserSchema);

@@ -86,22 +86,22 @@ function saveVocab(res, currentUser) {
     } else {
       // searching for list
       let found = 0;
-      for (i = 0; i < result.vocablist.length; i++) {
+      for (i = 0; i < result.vocabList.length; i++) {
         // if found then add to list
-        if (result.vocablist[i].source == res.from.language.iso) {
+        if (result.vocabList[i].source == res.from.language.iso) {
 
           // double check if word is already saved
           let exists = 0;
           found = 1;
-          for (k in result.vocablist[i].vocab) {
+          for (k in result.vocabList[i].vocab) {
 
-            if (result.vocablist[i].vocab[k].sourceWord == res.original)
+            if (result.vocabList[i].vocab[k].sourceWord == res.original)
               exists = 1;
           }
 
           // if not added, add word
           if (exists == 0) {
-            result.vocablist[i].vocab.push({
+            result.vocabList[i].vocab.push({
               sourceWord: res.original,
               targetWord: res.translated
             });
@@ -113,9 +113,9 @@ function saveVocab(res, currentUser) {
       }
       // if not found, add list to db and word to list
       if (found === 0) {
-        console.log('list not found.. adding list ' + result.vocablist.length);
-        let list = result.vocablist.length;
-        result.vocablist[list] = {
+        console.log('list not found.. adding list ' + result.vocabList.length);
+        let list = result.vocabList.length;
+        result.vocabList[list] = {
           source: res.from.language.iso,
           target: result.translateTo,
           vocab: [{
@@ -137,7 +137,6 @@ function saveVocab(res, currentUser) {
 }
 
 function getUser(message) {
-  console.log(message)
   return new Promise((resolve, reject) => {
     User.findOne({
       teamID: message.team_id || mesage.team.id,
