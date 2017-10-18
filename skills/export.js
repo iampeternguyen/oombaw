@@ -32,22 +32,23 @@ module.exports = function(controller) {
 
       controller.on('interactive_message_callback', function(bot, message) {
         if (message.callback_id == "export_callback") {
-          oombawDB.getVocabList(message).then(JSONlist => {
+          oombawDB.getVocabList(message).then(list => {
             // TODO export list function. how to get JSON to csv? and clickable
             let fields = ['sourceWord', 'targetWord', 'date'];
             json2csv({
-              data: JSONlist,
+              data: list,
               fields: fields
             }, function(err, csv) {
               if (err) console.log(err);
-              console.log(csv);
+              //console.log(csv);
+              fs.writeFile('../public/' + message.user + '.csv', csv, (err) => {
+                if (err)
+                  throw err;
+                console.log(message.user + '.csv saved.')
+              })
             });
 
-            fs.writeFile('../public/' + message.user + '.csv', csv, (err) => {
-              if (err)
-                throw err;
-              console.log(message.user + '.csv saved.')
-            })
+
             bot.replyInteractive(message, {
               text: ":ok_hand:",
               replace_original: true,

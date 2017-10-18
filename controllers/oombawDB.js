@@ -157,9 +157,9 @@ function getVocabList(message) {
   return new Promise((resolve, reject) => {
     getUser(message).then(currentUser => {
       if (currentUser) {
-        let JSONlist = currentUser.vocabList[message.text].vocab
-        console.log(JSONlist)
-        resolve(JSONlist)
+        let list = currentUser.vocabList[message.text].vocab
+        //console.log(JSONlist)
+        resolve(list)
       } else {
         reject("could not export list as specified")
       }
