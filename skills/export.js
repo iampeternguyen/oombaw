@@ -33,8 +33,9 @@ module.exports = function(controller) {
       controller.on('interactive_message_callback', function(bot, message) {
         if (message.callback_id == "export_callback") {
           oombawDB.getVocabList(message).then(list => {
-            // TODO export list function. how to get JSON to csv? and clickable
+
             let fields = ['sourceWord', 'targetWord', 'date'];
+            let url = '';
             json2csv({
               data: list,
               fields: fields
@@ -45,12 +46,13 @@ module.exports = function(controller) {
                 if (err)
                   throw err;
                 console.log(message.user + '.csv saved.')
+                url = 'http://oombaw.herokuapp.com/' + message.user + '.csv';
               })
             });
 
 
             bot.replyInteractive(message, {
-              text: ":ok_hand:",
+              text: "Download vocab list here: " + url,
               replace_original: true,
               callback_id: 'export_callback',
               response_type: 'ephemeral'
