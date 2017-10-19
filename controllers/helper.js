@@ -44,8 +44,13 @@ function checkLanguagePrefs(oombawUser, message, controller) {
 }
 
 function askUserPrefs(oombawUser) {
+  // TODO FIGURE OUT A BETTER WAY TO DO THIS
   return new Promise((resolve, reject) => {
-    bot.replyPrivate(oombawUser.message, {
+    // necessary formatting for sendEphemeral
+    let user = {
+      user: oombawUser.userID
+    }
+    bot.sendEphemeral(user, {
       text: "What language would you like to translate to?",
       response_type: "ephemeral",
       attachments: [{
@@ -66,7 +71,7 @@ function askUserPrefs(oombawUser) {
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
       if (message.callback_id == "language_selection") {
-        bot.replyInteractive(oombawUser.message, {
+        bot.replyInteractive(message, {
           text: "",
           replace_original: true,
           callback_id: 'language_selection',
