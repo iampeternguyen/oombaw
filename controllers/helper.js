@@ -32,6 +32,7 @@ function checkLanguagePrefs(oombawUser, message, controller) {
     } else {
       askUserPrefs(oombawUser, message, controller)
         .then(oombawUser => {
+
           resolve(oombawUser);
         })
     //reject("No language preference")
@@ -74,14 +75,9 @@ function askUserPrefs(oombawUser, message, controller) {
             console.log('Experiment finished')
           }
         });
-        oombawDB.addUserPref(oombawUser, message.text)
-          .then(updatedOombawUser => {
-            if (updatedOombawUser) {
-              resolve(updatedOombawUser)
-            } else {
-              reject("Could not save preferences")
-            }
-          })
+
+        oombawUser.translateTo = message.value;
+        resolve(oombawUser);
       }
 
     });
