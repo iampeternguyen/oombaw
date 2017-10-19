@@ -49,7 +49,7 @@ function checkAddUser(userInfo) {
 function addUserPref(oombawUser, value) {
   return new Promise((resolve, reject) => {
     oombawUser.translateTo = value;
-    oombawUser.save().then(() => {
+    oombawUser.save().then((savedUser) => {
       resolve(oombawUser);
     });
   });
