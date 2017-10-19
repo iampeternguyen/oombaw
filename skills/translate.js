@@ -18,7 +18,7 @@ module.exports = function(controller) {
 
 
     oombawDB.checkAddUser(userInfo)
-      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, text))
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, text, controller))
       .then(oombawUser => translateWord(oombawUser, text.text))
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);

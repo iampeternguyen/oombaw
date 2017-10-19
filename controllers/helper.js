@@ -24,7 +24,7 @@ function translateMessage(text, user) {
   })
 }
 
-function checkLanguagePrefs(oombawUser, message) {
+function checkLanguagePrefs(oombawUser, message, controller) {
   return new Promise((resolve, reject) => {
     let userObj = oombawUser.toObject();
     if (userObj.hasOwnProperty('translateTo')) {
