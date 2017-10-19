@@ -47,7 +47,9 @@ function checkLanguagePrefs(oombawUser, message, controller) {
 function askUserPrefs(oombawUser) {
   // TODO FIGURE OUT A BETTER WAY TO DO THIS
   return new Promise((resolve, reject) => {
-
+    //          "channel": oombawUser.message.channel_id,
+    // "token": oombawUser.message.token,
+    // "user": oombawUser.message.user_id,
     bot.replyPrivate(oombawUser.message, {
       "text": "What language would you like to translate to?",
       "response_type": "ephemeral",
@@ -69,12 +71,10 @@ function askUserPrefs(oombawUser) {
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
       if (message.callback_id == "language_selection") {
-        bot.say(, {
+        bot.replyPrivate(message, {
           text: "",
           replace_original: true,
-          "channel": oombawUser.message.channel_id,
-          "token": oombawUser.message.token,
-          "user": oombawUser.message.user_id,
+
           callback_id: 'language_selection',
         }, (err) => {
           if (err) {
