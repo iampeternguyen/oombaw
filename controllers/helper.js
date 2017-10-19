@@ -54,7 +54,7 @@ function askUserPrefs(oombawUser) {
 
 
     //bot.api.chat.postMessage(token, channel, 
-    bot.say({
+    bot.sayPrivate({
       "text": "What language would you like to translate to?",
       "channel": channel,
       "token": token,
