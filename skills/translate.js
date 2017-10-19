@@ -14,6 +14,7 @@ module.exports = function(controller) {
       .then(currentUser => helper.checkLanguagePrefs)
       .then(currentUser => translateWord(currentUser, message.text))
       .then(res => {
+        console.log(res)
         bot.replyPrivate(message, res.original + ": " + res.translated);
       //saveYesOrNo(currentUser, res, message);
       })
@@ -86,6 +87,7 @@ module.exports = function(controller) {
 
 
   function translateWord(currentUser, text) {
+    console.log(text)
     return new Promise((resolve, reject) => {
       translate(text, {
         to: currentUser.translateTo
