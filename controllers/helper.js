@@ -47,17 +47,13 @@ function checkLanguagePrefs(oombawUser, message, controller) {
 function askUserPrefs(oombawUser) {
   // TODO FIGURE OUT A BETTER WAY TO DO THIS
   return new Promise((resolve, reject) => {
-    // necessary formatting for postMessage
-    let channel = oombawUser.message.channel_id,
-      token = oombawUser.message.token;
-
-
-
+    
     //bot.api.chat.postMessage(token, channel, 
-    bot.send({
+    bot.sendEphemeral({
       "text": "What language would you like to translate to?",
-      "channel": channel,
-      "token": token,
+      "channel": oombawUser.message.channel_id,
+      "token": oombawUser.message.token,
+      "user": oombawUser.message.user_id
       "reply_broadcast": false,
       "attachments": [{
         //"text": "Choose a language to translate to",
