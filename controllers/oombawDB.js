@@ -46,14 +46,6 @@ function checkAddUser(userInfo) {
 
 }
 
-function addUserPrefs(oombawUser, value) {
-  return new Promise((resolve, reject) => {
-    oombawUser.translateTo = value;
-    oombawUser.save().then((savedUser) => {
-      resolve(oombawUser);
-    });
-  });
-}
 
 function saveVocab(oombawUser) {
 
@@ -135,4 +127,13 @@ function getVocabList(message) {
 
     })
   })
+}
+
+function addUserPrefs(oombawUser, value) {
+  return new Promise((resolve, reject) => {
+    oombawUser.translateTo = value;
+    oombawUser.save().then((savedUser) => {
+      resolve(oombawUser);
+    });
+  });
 }
