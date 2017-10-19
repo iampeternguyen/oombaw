@@ -56,7 +56,6 @@ module.exports = function(controller) {
       bot.whisper(message, {
         user: oombawUser.userID,
         text: translatedMessage.text,
-        response_type: "ephemeral",
         attachments: [{
           text: "",
           fallback: 'Yes or No?',
@@ -86,7 +85,6 @@ module.exports = function(controller) {
             text: ":ok_hand:",
             replace_original: true,
             callback_id: 'yesno_callback',
-            response_type: 'ephemeral'
           }, (err) => {
             if (err) {
               console.log(err);
@@ -99,7 +97,6 @@ module.exports = function(controller) {
             text: ":ok_hand:",
             replace_original: true,
             callback_id: 'yesno_callback',
-            response_type: 'ephemeral'
           }, (err) => {
             if (err) {
               console.log(err);
