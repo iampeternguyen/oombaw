@@ -30,13 +30,13 @@ function checkLanguagePrefs(oombawUser, message, controller) {
     if (userObj.hasOwnProperty('translateTo')) {
       resolve(oombawUser);
     } else {
-      askUserPrefs(oombawUser, message);
+      askUserPrefs(oombawUser, message, controller);
     //reject("No language preference")
     }
   })
 }
 
-function askUserPrefs(oombawUser, message) {
+function askUserPrefs(oombawUser, message, controller) {
   bot.whisper(message, {
     text: "What language would you like to translate to?",
     response_type: "ephemeral",
