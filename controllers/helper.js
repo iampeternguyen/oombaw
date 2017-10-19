@@ -51,19 +51,18 @@ function askUserPrefs(oombawUser) {
       user: oombawUser.userID
     }
     bot.say({
-      text: "What language would you like to translate to?",
-      response_type: "ephemeral",
-      attachments: [{
+      "text": "What language would you like to translate to?",
+      "attachments": [{
         //"text": "Choose a language to translate to",
-        fallback: "",
-        color: "#3AA3E3",
-        attachment_type: "default",
-        callback_id: "language_selection",
-        actions: [{
-          name: "language_choice",
-          text: "Pick a language...",
-          type: "select",
-          options: languages
+        "fallback": "",
+        "color": "#3AA3E3",
+        "attachment_type": "default",
+        "callback_id": "language_selection",
+        "actions": [{
+          "name": "language_choice",
+          "text": "Pick a language...",
+          "type": "select",
+          "options": languages
         }]
       }]
     });
@@ -75,7 +74,6 @@ function askUserPrefs(oombawUser) {
           text: "",
           replace_original: true,
           callback_id: 'language_selection',
-          response_type: 'ephemeral'
         }, (err) => {
           if (err) {
             console.log(err);
