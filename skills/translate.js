@@ -15,7 +15,7 @@ module.exports = function(controller) {
       .then(currentUser => translateWord(currentUser, message.text))
       .then(res => {
         bot.replyPrivate(message, res.original + ": " + res.translated);
-        saveYesOrNo(currentUser, res, message);
+      //saveYesOrNo(currentUser, res, message);
       })
       .catch(console.error)
 
