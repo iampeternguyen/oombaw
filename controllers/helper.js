@@ -67,13 +67,17 @@ function askUserPrefs(oombawUser) {
         }]
       }]
     });
-
+    // TODO cannot send header problem
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
+      console.log(message);
       if (message.callback_id == "language_selection") {
-        bot.replyPrivate(message, {
-          text: "",
+        bot.sendEphemeral({
+          text: "replied",
           replace_original: true,
+          "channel": oombawUser.message.channel_id,
+          "token": oombawUser.message.token,
+          "user": oombawUser.message.user_id,
 
           callback_id: 'language_selection',
         }, (err) => {
