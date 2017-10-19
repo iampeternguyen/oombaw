@@ -30,6 +30,7 @@ function checkLanguagePrefs(oombawUser, message, controller) {
     if (userObj.hasOwnProperty('translateTo')) {
       resolve(oombawUser);
     } else {
+      // consolidate sent parameters
       oombawUser.message = message;
       oombawUser.controller = controller;
       askUserPrefs(oombawUser)
@@ -65,7 +66,7 @@ function askUserPrefs(oombawUser) {
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
       if (message.callback_id == "language_selection") {
-        bot.replyInteractive(message, {
+        bot.replyInteractive(oombawUser.message, {
           text: "",
           replace_original: true,
           callback_id: 'language_selection',
