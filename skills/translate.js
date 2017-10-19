@@ -22,7 +22,7 @@ module.exports = function(controller) {
       .then(res => {
         console.log(res)
         bot.replyPrivate(message, res.original + ": " + res.translated);
-        saveYesOrNo(currentUser, res, message);
+        saveYesOrNo(oombawUser, res, message);
       })
       .catch(console.error)
 
