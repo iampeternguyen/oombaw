@@ -92,7 +92,7 @@ function askUserPrefs(oombawUser) {
 
         oombawUser.translateTo = message.value;
         oombawUser.message = message;
-        oombawDB.addUserPref(oombawUser, message.value);
+        oombawUser.save();
 
         resolve(oombawUser);
       }
