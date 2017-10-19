@@ -46,31 +46,11 @@ function checkAddUser(userInfo) {
 
 }
 
-function addUserPref(message, value) {
+function addUserPref(oombawUser, value) {
   return new Promise((resolve, reject) => {
-    User.findOne({
-      teamID: message.team.id,
-      userID: message.user,
-    }).then(result => {
-      if (result === null) {
-        let err = 'could not change preferences';
-        reject(err);
-      } else {
-        result.translateTo = value;
-
-        // TODO Build separate translate function that returns translated phrase. 
-        // TODO translate phrases for help, exporting, changing saving preferences
-        // result.messages = {
-        //   saved: helper.translateMessage("Do you want to save this?", result)
-        // }
-        // console.log(result.messages.saved)
-
-        result.save().then(() => {
-          resolve(result);
-        });
-
-
-      }
+    oombawUser.translateTo = value;
+    oombawUser.save().then(() => {
+      resolve(oombawUser);
     });
   });
 }
