@@ -49,7 +49,7 @@ function askUserPrefs(oombawUser) {
   return new Promise((resolve, reject) => {
 
     //bot.api.chat.postMessage(token, channel, 
-    bot.chat.postEphemeral({
+    bot.api.chat.postEphemeral({
       "text": "What language would you like to translate to?",
       "channel": oombawUser.message.channel_id,
       "token": oombawUser.message.token,
