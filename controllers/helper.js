@@ -54,10 +54,10 @@ function askUserPrefs(oombawUser) {
 
 
     bot.api.chat.postMessage(token, channel, {
-      "text": "What language would you like to translate to?",
-      "attachments": [{
+      text: "What language would you like to translate to?",
+      attachments: [{
         //"text": "Choose a language to translate to",
-        "fallback": "",
+        "fallback: "",
         "color": "#3AA3E3",
         "attachment_type": "default",
         "callback_id": "language_selection",
