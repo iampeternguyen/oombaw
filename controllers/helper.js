@@ -30,7 +30,9 @@ function checkLanguagePrefs(oombawUser, message, controller) {
     if (userObj.hasOwnProperty('translateTo')) {
       resolve(oombawUser);
     } else {
-      askUserPrefs(oombawUser, message, controller)
+      oombawUser.message = message;
+      oombawUser.controller = controller;
+      askUserPrefs(oombawUser)
         .then(oombawUser => {
 
           resolve(oombawUser);
@@ -40,9 +42,9 @@ function checkLanguagePrefs(oombawUser, message, controller) {
   })
 }
 
-function askUserPrefs(oombawUser, message, controller) {
-  return new Promise((resolve, rejct) => {
-    bot.whisper(message, {
+function askUserPrefs(oombawUser) {
+  return new Promise((resolve, reject) => {
+    bot.replyPrivate(oombawUser.message, {
       text: "What language would you like to translate to?",
       response_type: "ephemeral",
       attachments: [{
@@ -60,7 +62,7 @@ function askUserPrefs(oombawUser, message, controller) {
       }]
     });
 
-    controller.on('interactive_message_callback', function(bot, message) {
+    oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
       if (message.callback_id == "language_selection") {
         bot.replyInteractive(message, {
