@@ -10,7 +10,7 @@ module.exports = function(controller) {
     // get necessary info from message
     var userInfo = {
       teamID: message.team_id || message.team.id,
-      userID: user
+      userID: message.user
 
     }
     var text = message.text;
