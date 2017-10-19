@@ -53,8 +53,11 @@ function askUserPrefs(oombawUser) {
 
 
 
-    bot.api.chat.postMessage(token, channel, {
+    //bot.api.chat.postMessage(token, channel, 
+    bot.say({
       "text": "What language would you like to translate to?",
+      "channel": channel,
+      "token": token,
       "attachments": [{
         //"text": "Choose a language to translate to",
         "fallback": "",
