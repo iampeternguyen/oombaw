@@ -24,20 +24,20 @@ function translateMessage(text, user) {
   })
 }
 
-function checkLanguagePrefs(oombawUser) {
+function checkLanguagePrefs(oombawUser, message) {
   return new Promise((resolve, reject) => {
     let userObj = oombawUser.toObject();
     if (userObj.hasOwnProperty('translateTo')) {
       resolve(oombawUser);
     } else {
-      askUserPrefs(oombawUser);
+      askUserPrefs(oombawUser, message);
     //reject("No language preference")
     }
   })
 }
 
-function askUserPrefs(oombawUser) {
-  bot.whisper({
+function askUserPrefs(oombawUser, message) {
+  bot.whisper(message, {
     text: "What language would you like to translate to?",
     response_type: "ephemeral",
     attachments: [{

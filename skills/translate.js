@@ -13,12 +13,13 @@ module.exports = function(controller) {
       userID: message.user
 
     }
-    var text = message.text;
+    var text = message;
+
 
 
     oombawDB.checkAddUser(userInfo)
-      .then(oombawUser => helper.checkLanguagePrefs(oombawUser))
-      .then(oombawUser => translateWord(oombawUser, text))
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, text))
+      .then(oombawUser => translateWord(oombawUser, text.text))
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
         saveYesOrNo(oombawUser, message);
