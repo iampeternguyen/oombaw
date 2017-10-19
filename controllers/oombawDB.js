@@ -76,65 +76,55 @@ function addUserPref(message, value) {
 }
 
 function saveVocab(oombawUser) {
-  console.log('saving' + oombawUser.temp.original + ' as ' + oombawUser.temp.translated);
-  User.findOne({
-    teamID: oombawUser.teamID,
-    userID: oombawUser.userID,
-  }).then(result => {
-    if (result === null) {
-      let err = 'could not save word';
-    } else {
-      // searching for list
-      let found = 0;
-      for (i = 0; i < result.vocabList.length; i++) {
-        // if found then add to list
-        if (result.vocabList[i].source == oombawUser.temp.from.language.iso) {
 
-          // double check if word is already saved
-          let exists = 0;
-          found = 1;
-          for (k in result.vocabList[i].vocab) {
+  // searching for list
+  let found = 0;
+  for (i = 0; i < oombawUser.vocabList.length; i++) {
+    // if found then add to list
+    if (oombawUser.vocabList[i].source == oombawUser.temp.from.language.iso) {
 
-            if (result.vocabList[i].vocab[k].sourceWord == oombawUser.temp.original)
-              exists = 1;
-          }
+      // double check if word is already saved
+      let exists = 0;
+      found = 1;
+      for (k in oombawUser.vocabList[i].vocab) {
 
-          // if not added, add word
-          if (exists == 0) {
-            result.vocabList[i].vocab.push({
-              sourceWord: oombawUser.temp.original,
-              targetWord: oombawUser.temp.translated
-            });
-            result.save();
-          }
-
-
-        }
+        if (oombawUser.vocabList[i].vocab[k].sourceWord == oombawUser.temp.original)
+          exists = 1;
       }
-      // if not found, add list to db and word to list
-      if (found === 0) {
-        console.log('list not found.. adding list ' + result.vocabList.length);
-        let list = result.vocabList.length;
-        result.vocabList[list] = {
-          source: res.from.language.iso,
-          target: result.translateTo,
-          vocab: [{
-            sourceWord: oombawUser.temp.original,
-            targetWord: oombawUser.temp.translated
-          }]
-        };
-        result.save();
 
+      // if not added, add word
+      if (exists == 0) {
+        oombawUser.vocabList[i].vocab.push({
+          sourceWord: oombawUser.temp.original,
+          targetWord: oombawUser.temp.translated
+        });
+        oombawUser.save();
       }
 
 
     }
-  }).catch(err => {
-    console.log("couldn't find user to save data to");
-    console.log(err);
-  });
+  }
+  // if not found, add list to db and word to list
+  if (found === 0) {
+    console.log('list not found.. adding list ' + oombawUser.vocabList.length);
+    let list = oombawUser.vocabList.length;
+    oombawUser.vocabList[list] = {
+      source: res.from.language.iso,
+      target: oombawUser.translateTo,
+      vocab: [{
+        sourceWord: oombawUser.temp.original,
+        targetWord: oombawUser.temp.translated
+      }]
+    };
+    oombawUser.save();
+
+  }
+
 
 }
+
+
+
 
 function getUser(message) {
   return new Promise((resolve, reject) => {
