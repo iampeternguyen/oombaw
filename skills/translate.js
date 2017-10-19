@@ -17,7 +17,7 @@ module.exports = function(controller) {
 
 
     oombawDB.checkAddUser(userInfo)
-      .then(oombawUser => helper.checkLanguagePrefs)
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser))
       .then(oombawUser => translateWord(oombawUser, text))
       .then(res => {
         console.log(res)
