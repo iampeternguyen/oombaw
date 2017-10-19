@@ -93,7 +93,7 @@ module.exports = function(controller) {
 
 
   function translateWord(oombawUser, text) {
-    console.log(text)
+    console.log(oombawUser)
     return new Promise((resolve, reject) => {
       translate(text, {
         to: oombawUser.translateTo
