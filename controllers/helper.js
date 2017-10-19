@@ -67,7 +67,7 @@ function askUserPrefs(oombawUser) {
         }]
       }]
     });
-    // TODO cannot send header problem
+    // TODO cannot send header problem but still sends message
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
       console.log(message);
@@ -91,6 +91,9 @@ function askUserPrefs(oombawUser) {
         });
 
         oombawUser.translateTo = message.value;
+        oombawUser.message = message;
+        oombawDB.addUserPref(oombawUser, message.value);
+
         resolve(oombawUser);
       }
 
