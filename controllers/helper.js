@@ -72,7 +72,7 @@ function askUserPrefs(oombawUser) {
       //bot.whisper(message, 'preferences saved ' + original);
       console.log(message);
       if (message.callback_id == "language_selection") {
-        bot.sendl({
+        bot.send({
           text: "replied",
           replace_original: true,
           "channel": oombawUser.message.channel_id,
