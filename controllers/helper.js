@@ -26,12 +26,57 @@ function translateMessage(text, user) {
 
 function checkLanguagePrefs(oombawUser) {
   return new Promise((resolve, reject) => {
-    console.log(oombawUser)
     let userObj = oombawUser.toObject();
     if (userObj.hasOwnProperty('translateTo')) {
       resolve(oombawUser);
     } else {
-      reject("No language preference")
+      askUserPrefs(oombawUser);
+    //reject("No language preference")
     }
   })
 }
+
+function askUserPrefs(oombawUser) {
+  bot.whisper(message, {
+    text: "What language would you like to translate to?",
+    response_type: "ephemeral",
+    attachments: [{
+      //"text": "Choose a language to translate to",
+      fallback: "",
+      color: "#3AA3E3",
+      attachment_type: "default",
+      callback_id: "language_selection",
+      actions: [{
+        name: "language_choice",
+        text: "Pick a language...",
+        type: "select",
+        options: languages
+      }]
+    }]
+  });
+
+  controller.on('interactive_message_callback', function(bot, message) {
+    //bot.whisper(message, 'preferences saved ' + original);
+    if (message.callback_id == "language_selection") {
+      bot.replyInteractive(message, {
+        text: "",
+        replace_original: true,
+        callback_id: 'language_selection',
+        response_type: 'ephemeral'
+      }, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Experiment finished')
+        }
+      });
+      oombawDB.addUserPref(message)
+    }
+
+  });
+
+
+}
+
+
+

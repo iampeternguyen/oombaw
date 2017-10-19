@@ -20,7 +20,6 @@ module.exports = function(controller) {
       .then(oombawUser => helper.checkLanguagePrefs(oombawUser))
       .then(oombawUser => translateWord(oombawUser, text))
       .then(oombawUser => {
-        //console.log(res)
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
         saveYesOrNo(oombawUser, message);
       })
@@ -28,72 +27,7 @@ module.exports = function(controller) {
 
   });
 
-
-
-  // function checkLanguagePrefs(currentUser) {
-  //   let userObj = currentUser.toObject();
-  //   if (userObj.hasOwnProperty('translateTo')) {
-  //     let original = message.text;
-  //     translateWord(currentUser, original).then(res => {
-  //       bot.replyPrivate(message, res.original + ": " + res.translated);
-  //       saveYesOrNo(currentUser, res, message);
-  //     });
-  //   } else {
-  //     let original = message.text;
-  //     bot.replyPrivate(message, {
-  //       text: "What language would you like to translate to?",
-  //       response_type: "ephemeral",
-  //       attachments: [{
-  //         //"text": "Choose a language to translate to",
-  //         fallback: "",
-  //         color: "#3AA3E3",
-  //         attachment_type: "default",
-  //         callback_id: "language_selection",
-  //         actions: [{
-  //           name: "language_choice",
-  //           text: "Pick a language...",
-  //           type: "select",
-  //           options: languages
-  //         }]
-  //       }]
-  //     });
-
-  //     controller.on('interactive_message_callback', function(bot, message) {
-  //       //bot.whisper(message, 'preferences saved ' + original);
-  //       if (message.callback_id == "language_selection") {
-  //         oombawDB.addUserPref(message, message.text).then(currentUser => {
-
-  //           translateWord(currentUser, original).then(res => {
-
-  //             bot.replyInteractive(message, {
-  //               text: res.original + ": " + res.translated,
-  //               replace_original: true,
-  //               callback_id: 'language_selection',
-  //               response_type: 'ephemeral'
-  //             }, (err) => {
-  //               if (err) {
-  //                 console.log(err);
-  //               } else {
-  //                 console.log('Experiment finished')
-  //               }
-  //             });
-  //             //bot.whisper(message, res);
-  //             saveYesOrNo(currentUser, res, message);
-
-  //           });
-  //         });
-  //       }
-
-  //     });
-  //   }
-  // }
-
-
-
-
-
   function translateWord(oombawUser, text) {
-    //console.log(oombawUser)
     return new Promise((resolve, reject) => {
       translate(text, {
         to: oombawUser.translateTo
@@ -106,12 +40,7 @@ module.exports = function(controller) {
             res.translated = res.text.toLowerCase();
             oombawUser.temp = res;
             resolve(oombawUser);
-          //bot.replyPrivate(message, res.original + ': ' + res.translated);
-          //console.log(original + ' is ' + translated);
-          // console.log(res.text);
-          // => I speak English
-          // console.log(res.from.language.iso);
-          // => nl
+
           }
 
         }).catch("transation error");
