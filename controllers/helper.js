@@ -33,6 +33,7 @@ function checkLanguagePrefs(oombawUser, message, controller) {
       // consolidate sent parameters
       oombawUser.message = message;
       oombawUser.controller = controller;
+      console.log(oombawUser.message)
       askUserPrefs(oombawUser)
         .then(oombawUser => {
 
@@ -47,10 +48,8 @@ function askUserPrefs(oombawUser) {
   // TODO FIGURE OUT A BETTER WAY TO DO THIS
   return new Promise((resolve, reject) => {
     // necessary formatting for sendEphemeral
-    let user = {
-      user: oombawUser.userID
-    }
-    bot.say({
+
+    bot.api.chat.postMessage({
       "text": "What language would you like to translate to?",
       "attachments": [{
         //"text": "Choose a language to translate to",
