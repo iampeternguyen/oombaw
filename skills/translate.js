@@ -4,18 +4,18 @@ const helper = require('../controllers/helper');
 
 module.exports = function(controller) {
 
-  // add event handlers to controller
-  // such as hears handlers that match triggers defined in code
-  // or controller.studio.before, validate, and after which tie into triggers
-  // defined in the Botkit Studio UI.
   controller.on('slash_command', function(bot, message) {
     // reply to slash command
+
+    // get necessary info from message
     var userInfo = {
       teamID: message.team_id || message.team.id,
       userID: user
 
     }
     var text = message.text;
+
+
     oombawDB.checkAddUser(userInfo)
       .then(oombawUser => helper.checkLanguagePrefs)
       .then(oombawUser => translateWord(oombawUser, text))
