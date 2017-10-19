@@ -19,7 +19,7 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(userInfo)
       .then(oombawUser => helper.checkLanguagePrefs(oombawUser))
       .then(oombawUser => translateWord(oombawUser, text))
-      .then(res => {
+      .then((oombawUser, res) => {
         console.log(res)
         bot.replyPrivate(message, res.original + ": " + res.translated);
         saveYesOrNo(oombawUser, res, message);
@@ -104,7 +104,7 @@ module.exports = function(controller) {
           } else {
             res.original = text.toLowerCase();
             res.translated = res.text.toLowerCase();
-            resolve(res);
+            resolve(oombawUser, res);
           //bot.replyPrivate(message, res.original + ': ' + res.translated);
           //console.log(original + ' is ' + translated);
           // console.log(res.text);
