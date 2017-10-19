@@ -50,7 +50,7 @@ function askUserPrefs(oombawUser) {
     let user = {
       user: oombawUser.userID
     }
-    bot.replyPrivate(oombawUser.message, {
+    bot.sendEphemeral(user, {
       text: "What language would you like to translate to?",
       response_type: "ephemeral",
       attachments: [{
