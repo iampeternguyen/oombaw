@@ -58,6 +58,7 @@ function askUserPrefs(oombawUser) {
       "text": "What language would you like to translate to?",
       "channel": channel,
       "token": token,
+      "reply_broadcast": false,
       "attachments": [{
         //"text": "Choose a language to translate to",
         "fallback": "",
