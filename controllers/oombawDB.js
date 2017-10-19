@@ -75,11 +75,11 @@ function addUserPref(message, value) {
   });
 }
 
-function saveVocab(res, currentUser) {
-  console.log('saving' + res.original + ' as ' + res.translated);
+function saveVocab(oombawUser) {
+  console.log('saving' + oombawUser.temp.original + ' as ' + oombawUser.temp.translated);
   User.findOne({
-    teamID: currentUser.teamID,
-    userID: currentUser.userID,
+    teamID: oombawUser.teamID,
+    userID: oombawUser.userID,
   }).then(result => {
     if (result === null) {
       let err = 'could not save word';
@@ -88,22 +88,22 @@ function saveVocab(res, currentUser) {
       let found = 0;
       for (i = 0; i < result.vocabList.length; i++) {
         // if found then add to list
-        if (result.vocabList[i].source == res.from.language.iso) {
+        if (result.vocabList[i].source == oombawUser.temp.from.language.iso) {
 
           // double check if word is already saved
           let exists = 0;
           found = 1;
           for (k in result.vocabList[i].vocab) {
 
-            if (result.vocabList[i].vocab[k].sourceWord == res.original)
+            if (result.vocabList[i].vocab[k].sourceWord == oombawUser.temp.original)
               exists = 1;
           }
 
           // if not added, add word
           if (exists == 0) {
             result.vocabList[i].vocab.push({
-              sourceWord: res.original,
-              targetWord: res.translated
+              sourceWord: oombawUser.temp.original,
+              targetWord: oombawUser.temp.translated
             });
             result.save();
           }
@@ -119,8 +119,8 @@ function saveVocab(res, currentUser) {
           source: res.from.language.iso,
           target: result.translateTo,
           vocab: [{
-            sourceWord: res.original,
-            targetWord: res.translated
+            sourceWord: oombawUser.temp.original,
+            targetWord: oombawUser.temp.translated
           }]
         };
         result.save();

@@ -118,7 +118,7 @@ module.exports = function(controller) {
     });
   }
 
-  function saveYesOrNo(oombawUser, res, message) {
+  function saveYesOrNo(oombawUser, message) {
 
     translate('Do you want to save this?', {
       to: oombawUser.translateTo
@@ -151,7 +151,7 @@ module.exports = function(controller) {
 
       controller.on('interactive_message_callback', function(bot, message) {
         if (message.text == "yes" && message.callback_id == "yesno_callback") {
-          oombawDB.saveVocab(res, oombawUser);
+          oombawDB.saveVocab(oombawUser);
           bot.replyInteractive(message, {
             text: ":ok_hand:",
             replace_original: true,
