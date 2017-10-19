@@ -48,12 +48,8 @@ function askUserPrefs(oombawUser) {
   // TODO FIGURE OUT A BETTER WAY TO DO THIS
   return new Promise((resolve, reject) => {
 
-    //bot.api.chat.postMessage(token, channel, 
-    bot.say({
+    bot.replyPrivate(oombawUser.message, {
       "text": "What language would you like to translate to?",
-      "channel": oombawUser.message.channel_id,
-      "token": oombawUser.message.token,
-      "user": oombawUser.message.user_id,
       "response_type": "ephemeral",
       "attachments": [{
         //"text": "Choose a language to translate to",
@@ -73,9 +69,12 @@ function askUserPrefs(oombawUser) {
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
       if (message.callback_id == "language_selection") {
-        bot.replyInteractive(message, {
+        bot.say(, {
           text: "",
           replace_original: true,
+          "channel": oombawUser.message.channel_id,
+          "token": oombawUser.message.token,
+          "user": oombawUser.message.user_id,
           callback_id: 'language_selection',
         }, (err) => {
           if (err) {
