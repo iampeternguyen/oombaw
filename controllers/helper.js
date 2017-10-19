@@ -1,8 +1,10 @@
 const translate = require('google-translate-api-extended');
+const oombawDB = require('../controllers/oombawDB');
 
 
 module.exports = {
   translateMessage: translateMessage,
+  checkLanguagePrefs: checkLanguagePrefs
 
 };
 //
@@ -22,3 +24,13 @@ function translateMessage(text, user) {
   })
 }
 
+function checkLanguagePrefs(currentUser) {
+  return new Promise((resolve, reject) => {
+    let userObj = currentUser.toObject();
+    if (userObj.hasOwnProperty('translateTo')) {
+      resolve(currentUser);
+    } else {
+      reject("No language preference")
+    }
+  })
+}
