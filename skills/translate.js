@@ -13,6 +13,7 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(message)
       .then(currentUser => helper.checkLanguagePrefs)
       .then(currentUser => translateWord(currentUser, message.text))
+      .catch(console.error)
 
   });
 
