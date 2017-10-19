@@ -117,13 +117,13 @@ module.exports = function(controller) {
     });
   }
 
-  function saveYesOrNo(currentUser, res, message) {
+  function saveYesOrNo(oombawUser, res, message) {
 
     translate('Do you want to save this?', {
-      to: currentUser.translateTo
+      to: oombawUser.translateTo
     }).then(translatedMessage => {
       bot.whisper(message, {
-        user: currentUser.userID,
+        user: oombawUser.userID,
         text: translatedMessage.text,
         response_type: "ephemeral",
         attachments: [{
@@ -150,7 +150,7 @@ module.exports = function(controller) {
 
       controller.on('interactive_message_callback', function(bot, message) {
         if (message.text == "yes" && message.callback_id == "yesno_callback") {
-          oombawDB.saveVocab(res, currentUser);
+          oombawDB.saveVocab(res, oombawUser);
           bot.replyInteractive(message, {
             text: ":ok_hand:",
             replace_original: true,
