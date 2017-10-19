@@ -9,7 +9,7 @@ const helper = require('../controllers/helper');
 mongoose.Promise = global.Promise;
 module.exports = {
   checkAddUser: checkAddUser,
-  addUserPref: addUserPref,
+  addUserPrefs: addUserPrefs,
   saveVocab: saveVocab,
   getUser: getUser,
   getVocabList: getVocabList
@@ -46,7 +46,7 @@ function checkAddUser(userInfo) {
 
 }
 
-function addUserPref(oombawUser, value) {
+function addUserPrefs(oombawUser, value) {
   return new Promise((resolve, reject) => {
     oombawUser.translateTo = value;
     oombawUser.save().then((savedUser) => {
