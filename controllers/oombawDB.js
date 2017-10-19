@@ -15,16 +15,16 @@ module.exports = {
   getVocabList: getVocabList
 };
 //
-function checkAddUser(message) {
+function checkAddUser(userInfo) {
   return new Promise((resolve, reject) => {
     User.findOne({
-      teamID: message.team_id,
-      userID: message.user_id
+      teamID: userInfo.teamID,
+      userID: userInfo.userID
     }).then(result => {
       if (result === null) {
         var regUser = new User({
-          teamID: message.team_id,
-          userID: message.user_id
+          teamID: userInfo.teamID,
+          userID: userInfo.userID
         });
 
         regUser.save().then(() => {
@@ -38,8 +38,7 @@ function checkAddUser(message) {
         resolve(result);
       }
     }).catch(err => {
-      console.error(err);
-      reject(new Error(err));
+      reject("Could not add or find user");
     });
   }
 

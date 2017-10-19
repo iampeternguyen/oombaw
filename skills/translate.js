@@ -10,10 +10,15 @@ module.exports = function(controller) {
   // defined in the Botkit Studio UI.
   controller.on('slash_command', function(bot, message) {
     // reply to slash command
-    console.log(message)
-    oombawDB.checkAddUser(message)
-      .then(currentUser => helper.checkLanguagePrefs)
-      .then(currentUser => translateWord(currentUser, message.text))
+    var userInfo = {
+      teamID: message.team_id || message.team.id,
+      userID: user
+
+    }
+    var text = message.text;
+    oombawDB.checkAddUser(userInfo)
+      .then(oombawUser => helper.checkLanguagePrefs)
+      .then(oombawUser => translateWord(oombawUser, text))
       .then(res => {
         console.log(res)
         bot.replyPrivate(message, res.original + ": " + res.translated);
@@ -87,11 +92,11 @@ module.exports = function(controller) {
 
 
 
-  function translateWord(currentUser, text) {
+  function translateWord(oombawUser, text) {
     console.log(text)
     return new Promise((resolve, reject) => {
       translate(text, {
-        to: currentUser.translateTo
+        to: oombawUser.translateTo
       })
         .then(res => {
           if (res == null) {
@@ -106,7 +111,6 @@ module.exports = function(controller) {
           // => I speak English
           // console.log(res.from.language.iso);
           // => nl
-          //saveYesOrNo(currentUser, msg, res);
           }
 
         }).catch("transation error");

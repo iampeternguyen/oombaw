@@ -24,11 +24,11 @@ function translateMessage(text, user) {
   })
 }
 
-function checkLanguagePrefs(currentUser) {
+function checkLanguagePrefs(oombawUser) {
   return new Promise((resolve, reject) => {
-    let userObj = currentUser.toObject();
+    let userObj = oombawUser.toObject();
     if (userObj.hasOwnProperty('translateTo')) {
-      resolve(currentUser);
+      resolve(oombawUser);
     } else {
       reject("No language preference")
     }
