@@ -20,9 +20,9 @@ module.exports = function(controller) {
       .then(oombawUser => helper.checkLanguagePrefs(oombawUser))
       .then(oombawUser => translateWord(oombawUser, text))
       .then(oombawUser => {
-        console.log(res)
+        //console.log(res)
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
-        saveYesOrNo(oombawUser, res, message);
+        saveYesOrNo(oombawUser, oombawUser.temp, message);
       })
       .catch(console.error)
 
@@ -93,7 +93,7 @@ module.exports = function(controller) {
 
 
   function translateWord(oombawUser, text) {
-    console.log(oombawUser)
+    //console.log(oombawUser)
     return new Promise((resolve, reject) => {
       translate(text, {
         to: oombawUser.translateTo
