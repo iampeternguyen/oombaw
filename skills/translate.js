@@ -13,6 +13,10 @@ module.exports = function(controller) {
     oombawDB.checkAddUser(message)
       .then(currentUser => helper.checkLanguagePrefs)
       .then(currentUser => translateWord(currentUser, message.text))
+      .then(res => {
+        bot.replyPrivate(message, res.original + ": " + res.translated);
+        saveYesOrNo(currentUser, res, message);
+      })
       .catch(console.error)
 
   });
