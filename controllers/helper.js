@@ -37,7 +37,7 @@ function checkLanguagePrefs(oombawUser) {
 }
 
 function askUserPrefs(oombawUser) {
-  bot.whisper(message, {
+  bot.whisper({
     text: "What language would you like to translate to?",
     response_type: "ephemeral",
     attachments: [{
