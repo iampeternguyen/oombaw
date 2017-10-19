@@ -10,6 +10,7 @@ module.exports = function(controller) {
   // defined in the Botkit Studio UI.
   controller.on('slash_command', function(bot, message) {
     // reply to slash command
+    console.log(message)
     oombawDB.checkAddUser(message)
       .then(currentUser => helper.checkLanguagePrefs)
       .then(currentUser => translateWord(currentUser, message.text))
