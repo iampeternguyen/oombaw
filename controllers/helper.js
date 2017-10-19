@@ -1,5 +1,5 @@
 const translate = require('google-translate-api-extended');
-const oombawDB = require('../controllers/oombawDB');
+const oombawDB = require('./oombawDB');
 
 
 module.exports = {
@@ -92,8 +92,7 @@ function askUserPrefs(oombawUser) {
 
         oombawUser.translateTo = message.value;
         oombawUser.message = message;
-        oombawUser.save();
-
+        oombawDB.addUserPref(oombawUser, message.value);
         resolve(oombawUser);
       }
 
