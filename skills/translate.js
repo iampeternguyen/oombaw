@@ -4,8 +4,8 @@ const helper = require('../controllers/helper');
 
 module.exports = function(controller) {
 
-  controller.on('slash_command', function(bot, message) {
-    // reply to slash command
+  controller.on('slash_command',
+  // reply to slash command
 
     // get necessary info from message
 
@@ -20,12 +20,13 @@ module.exports = function(controller) {
     //   //saveYesOrNo(oombawUser, oombawUser.message || message);
     //   })
     //   .catch(console.error)
-    });
+    })
+  )};
 
 
 
 
-  });
+
 
   function translateWord(oombawUser, text) {
     return new Promise((resolve, reject) => {
