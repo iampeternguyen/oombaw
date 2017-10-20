@@ -8,23 +8,22 @@ module.exports = function(controller) {
     // reply to slash command
 
     // get necessary info from message
-    var userInfo = {
-      teamID: message.team_id || message.team.id,
-      userID: message.user
 
-    }
-    var text = message;
+    bot.startPrivateConversation(message, (err, convo) => {
+      console.log(message);
+
+      oombawDB.checkAddUser(userInfo)
+        .then(oombawUser => helper.checkLanguagePrefs(oombawUser, text, controller))
+        .then(oombawUser => translateWord(oombawUser, text.text))
+        .then(oombawUser => {
+          bot.replyPrivate(oombawUser.message || message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
+          saveYesOrNo(oombawUser, oombawUser.message || message);
+        })
+        .catch(console.error)
+    });
 
 
 
-    oombawDB.checkAddUser(userInfo)
-      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, text, controller))
-      .then(oombawUser => translateWord(oombawUser, text.text))
-      .then(oombawUser => {
-        bot.replyPrivate(oombawUser.message || message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
-        saveYesOrNo(oombawUser, oombawUser.message || message);
-      })
-      .catch(console.error)
 
   });
 

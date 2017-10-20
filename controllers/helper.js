@@ -73,7 +73,7 @@ function askUserPrefs(oombawUser) {
       if (message.callback_id == "language_selection") {
         console.log(message);
         bot.replyInteractive(message, {
-          text: " ",
+          text: ":ok_hand: ",
           replace_original: true,
           "channel": oombawUser.message.channel_id,
           "token": oombawUser.message.token,
