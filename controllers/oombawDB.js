@@ -14,16 +14,16 @@ module.exports = {
   addUserPrefs: addUserPrefs
 };
 //
-function checkAddUser(userInfo) {
+function checkAddUser(msg) {
   return new Promise((resolve, reject) => {
     User.findOne({
-      teamID: userInfo.teamID,
-      userID: userInfo.userID
+      teamID: msg.team_ID,
+      userID: msg.user_ID
     }).then(result => {
       if (result === null) {
         var regUser = new User({
-          teamID: userInfo.teamID,
-          userID: userInfo.userID
+          teamID: msg.team_ID,
+          userID: msg.user_ID
         });
 
         regUser.save().then(() => {

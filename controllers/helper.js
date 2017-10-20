@@ -30,11 +30,8 @@ function checkLanguagePrefs(oombawUser, message, controller) {
     if (userObj.hasOwnProperty('translateTo')) {
       resolve(oombawUser);
     } else {
-      // consolidate sent parameters
-      oombawUser.message = message;
-      oombawUser.controller = controller;
       //console.log(oombawUser.message)
-      askUserPrefs(oombawUser)
+      askUserPrefs(oombawUser, convo, controller)
         .then(oombawUser => {
 
           resolve(oombawUser);
