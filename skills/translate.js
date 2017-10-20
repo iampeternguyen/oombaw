@@ -26,12 +26,12 @@ module.exports = function(controller) {
     //     text: 'done'
     //   }, 'completed');
 
-    oombawDB.checkAddUser(msg)
+    oombawDB.checkAddUser(message)
       .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
-      .then(oombawUser => translateWord(oombawUser, msg.text))
+      .then(oombawUser => translateWord(oombawUser, message.text))
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
-        saveYesOrNo(oombawUser, message);
+        //saveYesOrNo(oombawUser, message);
       })
       .catch(console.error)
     });
