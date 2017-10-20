@@ -33,7 +33,7 @@ function checkLanguagePrefs(oombawUser, message, controller) {
       // consolidate sent parameters
       oombawUser.message = message;
       oombawUser.controller = controller;
-      console.log(oombawUser.message)
+      //console.log(oombawUser.message)
       askUserPrefs(oombawUser)
         .then(oombawUser => {
 
@@ -68,15 +68,15 @@ function askUserPrefs(oombawUser) {
     // TODO cannot send header problem but still sends message
     oombawUser.controller.on('interactive_message_callback', function(bot, message) {
       //bot.whisper(message, 'preferences saved ' + original);
-      console.log(message);
+      //console.log(message);
       if (message.callback_id == "language_selection") {
-        bot.replyInteractive(message, {
+        bot.replyPrivate(message, {
           text: "replied",
           replace_original: true,
           "channel": oombawUser.message.channel_id,
           "token": oombawUser.message.token,
           "user": oombawUser.message.user_id,
-          response_type: "ephemeral",
+          //response_type: "ephemeral",
 
 
           callback_id: 'language_selection',
