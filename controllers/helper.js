@@ -70,13 +70,13 @@ function askUserPrefs(oombawUser) {
       //bot.whisper(message, 'preferences saved ' + original);
       //console.log(message);
       if (message.callback_id == "language_selection") {
-        bot.replyPrivate(message, {
+        bot.replyInteractive(message, {
           text: "replied",
           replace_original: true,
           "channel": oombawUser.message.channel_id,
           "token": oombawUser.message.token,
           "user": oombawUser.message.user_id,
-          //response_type: "ephemeral",
+          response_type: "ephemeral",
 
 
           callback_id: 'language_selection',
