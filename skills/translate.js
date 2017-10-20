@@ -12,14 +12,14 @@ module.exports = function(controller) {
     bot.startPrivateConversation(message, (err, convo) => {
       var msg = message;
       convo.say('hello');
-      oombawDB.checkAddUser(msg)
-        .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
-        .then(oombawUser => translateWord(oombawUser, msg.text))
-        .then(oombawUser => {
-          convo.say(oombawUser.temp.original + ": " + oombawUser.temp.translated);
-        //saveYesOrNo(oombawUser, oombawUser.message || message);
-        })
-        .catch(console.error)
+    // oombawDB.checkAddUser(msg)
+    //   .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
+    //   .then(oombawUser => translateWord(oombawUser, msg.text))
+    //   .then(oombawUser => {
+    //     convo.say(oombawUser.temp.original + ": " + oombawUser.temp.translated);
+    //   //saveYesOrNo(oombawUser, oombawUser.message || message);
+    //   })
+    //   .catch(console.error)
     });
 
 
