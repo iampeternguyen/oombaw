@@ -6,12 +6,12 @@ module.exports = function(controller) {
 
   controller.on('slash_command', function(bot, message) {
     // reply to slash command
-
-    // get necessary info from message
-    bot.replyPrivate(message, '')
     bot.startConversation(message, (err, convo) => {
       var msg = message;
-      convo.say('hello');
+      convo.goToThread('completed');
+      convo.addMessage({
+        text: 'done'
+      }, 'completed');
     // oombawDB.checkAddUser(msg)
     //   .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
     //   .then(oombawUser => translateWord(oombawUser, msg.text))
