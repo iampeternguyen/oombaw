@@ -6,30 +6,34 @@ module.exports = function(controller) {
 
   controller.on('slash_command', function(bot, message) {
     // reply to slash command
-    bot.startConversation(message, (err, convo) => {
-      var msg = message;
-      convo.addMessage({
-        text: 'Hello let me ask you a question, then i will do something useful'
-      }, 'default');
-      convo.addQuestion({
-        text: 'What is your name?'
-      }, function(res, convo) {
-        // name has been collected...
-        convo.gotoThread('completed');
-      }, {
-        key: 'name'
-      }, 'default');
-      convo.addMessage({
-        text: 'done'
-      }, 'completed');
-    // oombawDB.checkAddUser(msg)
-    //   .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
-    //   .then(oombawUser => translateWord(oombawUser, msg.text))
-    //   .then(oombawUser => {
-    //     convo.say(oombawUser.temp.original + ": " + oombawUser.temp.translated);
-    //   //saveYesOrNo(oombawUser, oombawUser.message || message);
-    //   })
-    //   .catch(console.error)
+    // TODO create two pathways. One pathway responds to the request using replyPrivate with the translated message
+    // TODO second pathway uses replyPrivate to ask a question first which starts a bot conversation to guide the user to setup their account
+
+    // bot.startConversation(message, (err, convo) => {
+    //   var msg = message;
+    //   convo.addMessage({
+    //     text: 'Hello let me ask you a question, then i will do something useful'
+    //   }, 'default');
+    //   convo.addQuestion({
+    //     text: 'What is your name?'
+    //   }, function(res, convo) {
+    //     // name has been collected...
+    //     convo.gotoThread('completed');
+    //   }, {
+    //     key: 'name'
+    //   }, 'default');
+    //   convo.addMessage({
+    //     text: 'done'
+    //   }, 'completed');
+
+    oombawDB.checkAddUser(msg)
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
+      .then(oombawUser => translateWord(oombawUser, msg.text))
+      .then(oombawUser => {
+        bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
+        saveYesOrNo(oombawUser, message);
+      })
+      .catch(console.error)
     });
 
 
