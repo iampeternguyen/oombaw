@@ -84,14 +84,14 @@ function askUserPrefs(oombawUser) {
           if (err) {
             console.log(err);
           } else {
-            console.log('Experiment finished')
+            console.log(message.value);
+            oombawUser.message = message;
+            oombawDB.addUserPrefs(oombawUser);
+            resolve(oombawUser);
           }
         });
 
-        console.log(message.value);
-        oombawUser.message = message;
-        oombawDB.addUserPrefs(oombawUser, message.value);
-        resolve(oombawUser);
+
       }
 
     });
