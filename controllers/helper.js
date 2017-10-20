@@ -88,7 +88,7 @@ function askUserPrefs(oombawUser) {
           }
         });
 
-        oombawUser.translateTo = message.value;
+        console.log(message.value);
         oombawUser.message = message;
         oombawDB.addUserPrefs(oombawUser, message.value);
         resolve(oombawUser);
