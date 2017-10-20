@@ -8,7 +8,17 @@ module.exports = function(controller) {
     // reply to slash command
     bot.startConversation(message, (err, convo) => {
       var msg = message;
-      convo.gotoThread('completed');
+      convo.addMessage({
+        text: 'Hello let me ask you a question, then i will do something useful'
+      }, 'default');
+      convo.addQuestion({
+        text: 'What is your name?'
+      }, function(res, convo) {
+        // name has been collected...
+        convo.gotoThread('completed');
+      }, {
+        key: 'name'
+      }, 'default');
       convo.addMessage({
         text: 'done'
       }, 'completed');
