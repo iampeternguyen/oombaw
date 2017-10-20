@@ -70,8 +70,9 @@ function askUserPrefs(oombawUser) {
       //bot.whisper(message, 'preferences saved ' + original);
       //console.log(message);
       if (message.callback_id == "language_selection") {
+        console.log(message);
         bot.replyInteractive(message, {
-          text: "replied",
+          text: "",
           replace_original: true,
           "channel": oombawUser.message.channel_id,
           "token": oombawUser.message.token,
@@ -84,7 +85,6 @@ function askUserPrefs(oombawUser) {
           if (err) {
             console.log(err);
           } else {
-            console.log(message.value);
             oombawUser.message = message;
             oombawDB.addUserPrefs(oombawUser);
             resolve(oombawUser);
