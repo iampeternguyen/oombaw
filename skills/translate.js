@@ -9,7 +9,7 @@ module.exports = function(controller) {
 
     // get necessary info from message
 
-    bot.startPrivateConversation(message, (err, convo) => {
+    bot.startConversation(message, (err, convo) => {
       var msg = message;
       convo.say('hello');
     // oombawDB.checkAddUser(msg)
