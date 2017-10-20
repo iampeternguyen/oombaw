@@ -11,7 +11,7 @@ module.exports = function(controller) {
 
     bot.startPrivateConversation(message, (err, convo) => {
       var msg = message;
-      console.log(convo);
+      convo.say('hello');
       oombawDB.checkAddUser(msg)
         .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
         .then(oombawUser => translateWord(oombawUser, msg.text))
