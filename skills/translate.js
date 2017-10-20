@@ -40,6 +40,7 @@ module.exports = function(controller) {
             res.original = text.toLowerCase();
             res.translated = res.text.toLowerCase();
             oombawUser.temp = res;
+            console.log(oombawUser);
             resolve(oombawUser);
 
           }
