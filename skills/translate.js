@@ -26,7 +26,7 @@ module.exports = function(controller) {
     //     text: 'done'
     //   }, 'completed');
     console.log(message)
-    oombawDB.checkAddUser(message)
+    oombawDB.checkAddUser(message.team_id, message.user_id)
       //      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
       .then(oombawUser => translateWord(oombawUser, message.text))
       .then(oombawUser => {
