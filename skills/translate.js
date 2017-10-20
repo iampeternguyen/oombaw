@@ -31,15 +31,15 @@ module.exports = function(controller) {
       .then(oombawUser => translateWord(oombawUser, message.text))
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
-        //saveYesOrNo(oombawUser, message);
+      //saveYesOrNo(oombawUser, message);
       })
       .catch(console.error)
-    });
-
-
-
-
   });
+
+
+
+
+
 
   function translateWord(oombawUser, text) {
     return new Promise((resolve, reject) => {
