@@ -130,7 +130,7 @@ function getVocabList(message) {
 
 function addUserPrefs(oombawUser) {
   return new Promise((resolve, reject) => {
-    console.log(oombawUser + ": " + value);
+
     oombawUser.translateTo = oombawUser.message.text;
     oombawUser.save().then((savedUser) => {
       console.log(savedUser);
