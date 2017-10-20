@@ -86,8 +86,8 @@ function askUserPrefs(oombawUser) {
             console.log(err);
           } else {
             oombawUser.message = message;
-            oombawDB.addUserPrefs(oombawUser);
-            resolve(oombawUser);
+            oombawDB.addUserPrefs(oombawUser).then(res => resolve(oombawUser))
+
           }
         });
 
