@@ -2,17 +2,16 @@ const assert = require('assert');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const translate = require('google-translate-api-extended');
-const helper = require('../controllers/helper');
 
 
 
 mongoose.Promise = global.Promise;
 module.exports = {
   checkAddUser: checkAddUser,
-  addUserPrefs: addUserPrefs,
   saveVocab: saveVocab,
   getUser: getUser,
-  getVocabList: getVocabList
+  getVocabList: getVocabList,
+  addUserPrefs: addUserPrefs
 };
 //
 function checkAddUser(userInfo) {

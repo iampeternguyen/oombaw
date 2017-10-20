@@ -1,5 +1,5 @@
 const translate = require('google-translate-api-extended');
-const oombawDB = require('./oombawDB');
+const oombawDB = require('../controllers/oombawDB');
 
 
 module.exports = {
