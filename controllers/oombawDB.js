@@ -17,7 +17,7 @@ module.exports = {
 function checkAddUser(msg) {
   return new Promise((resolve, reject) => {
     User.findOne({
-      teamID: msg.team_ID,
+      teamID: msg.team_ID || msg.team.id,
       userID: msg.user_ID
     }).then(result => {
       if (result === null) {
