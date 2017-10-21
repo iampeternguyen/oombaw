@@ -137,7 +137,7 @@ function addUserPrefs(oombawUser, preference) {
     oombawUser.translateTo = preference;
     oombawUser.save().then((savedUser) => {
       console.log(savedUser);
-      resolve(oombawUser);
+      resolve(savedUser);
     });
   });
 }
