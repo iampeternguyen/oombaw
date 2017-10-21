@@ -49,7 +49,11 @@ module.exports = function(controller) {
 
         oombawDB.addUserPrefs(oombawUser, response.text)
           .then(oombawUser => translateWord(oombawUser, original.text)
-            .then(oombawUser => convo.say("I translated something")));
+            .then(oombawUser => {
+              console.log("finished translation");
+              convo.addMessage(oombawUser.temp.original + ": " + oombawUser.temp.translated, 'completed')
+              convo.gotoThread('completed');
+            }));
       });
 
     });
