@@ -17,6 +17,7 @@ module.exports = function(controller) {
   function setupPrefsPath(oombawUser, message) {
     // TODO reply to message and begin convo chain
     original = message;
+    console.log("original")
     console.log(original);
 
     bot.replyPrivate(message, "What language do you want to translate to?");
@@ -42,8 +43,9 @@ module.exports = function(controller) {
         }]
       }
 
-
       convo.addQuestion(askPreference, (response, convo) => {
+        console.log("response")
+        console.log(response)
 
         oombawDB.addUserPrefs(oombawUser, response.text)
           .then(oombawUser => translateWord(oombawUser, original.text)
@@ -70,6 +72,9 @@ module.exports = function(controller) {
 
 
   function translateWord(oombawUser, text) {
+    console.log("translating")
+    console.log(text)
+
     return new Promise((resolve, reject) => {
       translate(text, {
         to: oombawUser.translateTo
