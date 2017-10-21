@@ -16,6 +16,8 @@ module.exports = function(controller) {
 
   function setupPrefsPath(oombawUser, message) {
     // TODO reply to message and begin convo chain
+    original = message.text;
+    console.log(original);
 
     bot.replyPrivate(message, "What language do you want to translate to?");
     // TODO create two pathways. One pathway responds to the request using replyPrivate with the translated message
@@ -23,11 +25,10 @@ module.exports = function(controller) {
     // to guide the user to setup their account
 
     bot.startConversation(message, (err, convo) => {
-      convo.addQuestion({
+      var askPreference = {
         "text": "",
-        response_type: "ephemeral",
+        "response_type": "ephemeral",
         "attachments": [{
-          //"text": "Choose a language to translate to",
           "fallback": "",
           "color": "#3AA3E3",
           "attachment_type": "default",
@@ -39,9 +40,12 @@ module.exports = function(controller) {
             "options": languages
           }]
         }]
-      }, (response, convo) => {
-        console.log(response);
-        oombawUser.translateTo = response.value;
+      }
+
+
+      convo.addQuestion(askPreference, (response, convo) => {
+
+        oombawDB.addUserPrefs(oombawUser, response.text);
       });
 
     });
