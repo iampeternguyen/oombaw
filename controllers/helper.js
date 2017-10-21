@@ -25,20 +25,13 @@ function translateMessage(text, user) {
 }
 
 function checkLanguagePrefs(oombawUser, message, controller) {
-  return new Promise((resolve, reject) => {
-    let userObj = oombawUser.toObject();
-    if (userObj.hasOwnProperty('translateTo')) {
-      resolve(oombawUser);
-    } else {
-      //console.log(oombawUser.message)
-      askUserPrefs(oombawUser, convo, controller)
-        .then(oombawUser => {
+  let userObj = oombawUser.toObject();
+  if (userObj.hasOwnProperty('translateTo')) {
+    return true;
+  } else {
+    return false;
+  }
 
-          resolve(oombawUser);
-        })
-    //reject("No language preference")
-    }
-  })
 }
 
 function askUserPrefs(oombawUser) {

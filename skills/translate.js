@@ -28,16 +28,25 @@ module.exports = function(controller) {
     //   }, 'completed');
     console.log(message)
     oombawDB.checkAddUser(message.team_id, message.user_id)
-      //      .then(oombawUser => helper.checkLanguagePrefs(oombawUser, convo, controller))
-      .then(oombawUser => translateWord(oombawUser, message.text))
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser) ? userExistsPath(oombawUser) : newUserPath(oombawUser)
+
+
+    )
+
+  });
+
+  function newUserPath(oombawUser) {
+    console.log("wip");
+  }
+
+  function userExistsPath(oombawUser) {
+    translateWord(oombawUser, message.text)
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
         saveYesOrNo(oombawUser, message);
       })
       .catch(console.error)
-  });
-
-
+  }
 
 
 
