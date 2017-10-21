@@ -26,8 +26,8 @@ function checkAddUser(teamID, userID) {
           userID: userID
         });
 
-        regUser.save().then(() => {
-          resolve(regUser);
+        regUser.save().then(newUser => {
+          resolve(newUser);
         });
         //console.log("new user added");
 
