@@ -37,12 +37,12 @@ module.exports = function(controller) {
       }
 
       convo.addQuestion(askPreference, (response, convo) => {
-        oombawDB.addUserPrefs(oombawUser, response.text) // TODO MORE TESTING or move this into the other pathway
+        oombawDB.addUserPrefs(oombawUser, response.text)
           .then(oombawUser => translateWord(oombawUser, original.text)
             .then(oombawUser => {
               convo.addMessage(oombawUser.temp.original + ": " + oombawUser.temp.translated, 'completed')
               convo.gotoThread('completed');
-              saveYesOrNo(oombawUser, original);
+            //saveYesOrNo(oombawUser, original);
             })
         );
       });
