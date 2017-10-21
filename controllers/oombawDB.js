@@ -80,7 +80,7 @@ function saveVocab(oombawUser) {
     console.log('list not found.. adding list ' + oombawUser.vocabList.length);
     let list = oombawUser.vocabList.length;
     oombawUser.vocabList[list] = {
-      source: res.from.language.iso,
+      source: oombawUser.from.language.iso,
       target: oombawUser.translateTo,
       vocab: [{
         sourceWord: oombawUser.temp.original,
