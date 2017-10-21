@@ -79,14 +79,16 @@ function saveVocab(oombawUser) {
   if (found === 0) {
     console.log('list not found.. adding list ' + oombawUser.vocabList.length);
     let list = oombawUser.vocabList.length;
-    oombawUser.vocabList[list] = {
+    oombawUser.vocabList[list] = [];
+    oombawUser.vocabList[list].push({
       source: oombawUser.temp.from.language.iso,
       target: oombawUser.translateTo,
       vocab: [{
         sourceWord: oombawUser.temp.original,
         targetWord: oombawUser.temp.translated
       }]
-    };
+    })
+
     oombawUser.save();
 
   }
