@@ -24,7 +24,7 @@ module.exports = function(controller) {
 
     bot.startConversation(message, (err, convo) => {
       convo.addMessage({
-        "text": "What language would you like to translate to?",
+        "text": "",
         response_type: "ephemeral",
         "attachments": [{
           //"text": "Choose a language to translate to",
