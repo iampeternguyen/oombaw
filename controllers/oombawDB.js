@@ -78,6 +78,7 @@ function saveVocab(oombawUser) {
   // if not found, add list to db and word to list
   if (found === 0) {
     console.log('list not found.. adding list ' + oombawUser.vocabList.length);
+    console.log(oombawUser);
     let list = oombawUser.vocabList.length;
     oombawUser.vocabList[list] = [];
     oombawUser.vocabList[list].push({
