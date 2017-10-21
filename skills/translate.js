@@ -28,7 +28,7 @@ module.exports = function(controller) {
     //   }, 'completed');
     //console.log(message)
     oombawDB.checkAddUser(message.team_id, message.user_id)
-      .then(oombawUser => helper.checkLanguagePrefs(oombawUser) ? userExistsPath(oombawUser) : newUserPath(oombawUser)
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser) ? userExistsPath(oombawUser, message) : newUserPath(oombawUser)
 
 
     )
@@ -39,7 +39,7 @@ module.exports = function(controller) {
     console.log("wip");
   }
 
-  function userExistsPath(oombawUser) {
+  function userExistsPath(oombawUser, message) {
     translateWord(oombawUser, message.text)
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
