@@ -16,7 +16,7 @@ module.exports = function(controller) {
 
   function setupPrefsPath(oombawUser, message) {
     // TODO reply to message and begin convo chain
-    original = message.text;
+    original = message;
     console.log(original);
 
     bot.replyPrivate(message, "What language do you want to translate to?");
@@ -45,7 +45,7 @@ module.exports = function(controller) {
 
       convo.addQuestion(askPreference, (response, convo) => {
 
-        oombawDB.addUserPrefs(oombawUser, response.text);
+        oombawDB.addUserPrefs(oombawUser, response.text).then(oombawUser => hasLangPrefsPath(oombawUser, original));
       });
 
     });
