@@ -47,7 +47,7 @@ function checkAddUser(teamID, userID) {
 
 
 function saveVocab(oombawUser) {
-
+  // needs google response stored into oombawUser.temp
   // searching for list
   let found = 0;
   for (i = 0; i < oombawUser.vocabList.length; i++) {
@@ -80,7 +80,7 @@ function saveVocab(oombawUser) {
     console.log('list not found.. adding list ' + oombawUser.vocabList.length);
     let list = oombawUser.vocabList.length;
     oombawUser.vocabList[list] = {
-      source: oombawUser.from.language.iso,
+      source: oombawUser.temp.from.language.iso,
       target: oombawUser.translateTo,
       vocab: [{
         sourceWord: oombawUser.temp.original,
