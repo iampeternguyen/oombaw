@@ -28,10 +28,9 @@ module.exports = function(controller) {
     //   }, 'completed');
     //console.log(message)
     oombawDB.checkAddUser(message.team_id, message.user_id)
-      .then(oombawUser => helper.checkLanguagePrefs(oombawUser) ? userExistsPath(oombawUser, message) : newUserPath(oombawUser)
-
-
-    )
+      .then(oombawUser => helper.checkLanguagePrefs(oombawUser)
+        ? userExistsPath(oombawUser, message)
+        : newUserPath(oombawUser))
 
   });
 
