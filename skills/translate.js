@@ -15,15 +15,8 @@ module.exports = function(controller) {
   });
 
   function setupPrefsPath(oombawUser, message) {
-    // TODO reply to message and begin convo chain
     original = message;
-    console.log("original")
-    console.log(original);
-
     bot.replyPrivate(message, "What language do you want to translate to?");
-    // TODO create two pathways. One pathway responds to the request using replyPrivate with the translated message
-    // TODO second pathway uses replyPrivate to ask a question first which starts a bot conversation 
-    // to guide the user to setup their account
 
     bot.startConversation(message, (err, convo) => {
       var askPreference = {
@@ -49,6 +42,7 @@ module.exports = function(controller) {
             .then(oombawUser => {
               convo.addMessage(oombawUser.temp.original + ": " + oombawUser.temp.translated, 'completed')
               convo.gotoThread('completed');
+              saveYesOrNo(oombawUser, oombawUser.temp);
             })
         );
       });
