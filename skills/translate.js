@@ -26,7 +26,7 @@ module.exports = function(controller) {
     //   convo.addMessage({
     //     text: 'done'
     //   }, 'completed');
-    console.log(message)
+    //console.log(message)
     oombawDB.checkAddUser(message.team_id, message.user_id)
       .then(oombawUser => helper.checkLanguagePrefs(oombawUser) ? userExistsPath(oombawUser) : newUserPath(oombawUser)
 
