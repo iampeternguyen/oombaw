@@ -42,7 +42,7 @@ module.exports = function(controller) {
             .then(oombawUser => {
               convo.addMessage(oombawUser.temp.original + ": " + oombawUser.temp.translated, 'completed')
               convo.gotoThread('completed');
-              saveYesOrNo(oombawUser, oombawUser.temp);
+              saveYesOrNo(oombawUser, original);
             })
         );
       });
