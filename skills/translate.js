@@ -7,7 +7,8 @@ module.exports = function(controller) {
   controller.on('slash_command', function(bot, message) {
     // reply to slash command
     // TODO create two pathways. One pathway responds to the request using replyPrivate with the translated message
-    // TODO second pathway uses replyPrivate to ask a question first which starts a bot conversation to guide the user to setup their account
+    // TODO second pathway uses replyPrivate to ask a question first which starts a bot conversation 
+    // to guide the user to setup their account
 
     // bot.startConversation(message, (err, convo) => {
     //   var msg = message;
@@ -31,7 +32,7 @@ module.exports = function(controller) {
       .then(oombawUser => translateWord(oombawUser, message.text))
       .then(oombawUser => {
         bot.replyPrivate(message, oombawUser.temp.original + ": " + oombawUser.temp.translated);
-      //saveYesOrNo(oombawUser, message);
+        saveYesOrNo(oombawUser, message);
       })
       .catch(console.error)
   });
