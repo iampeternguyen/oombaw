@@ -23,7 +23,7 @@ module.exports = function(controller) {
     // to guide the user to setup their account
 
     bot.startConversation(message, (err, convo) => {
-      convo.addMessage({
+      convo.addQuestion({
         "text": "",
         response_type: "ephemeral",
         "attachments": [{
@@ -39,17 +39,11 @@ module.exports = function(controller) {
             "options": languages
           }]
         }]
-      }, 'default');
-      convo.addQuestion({
-        text: 'What is your name?'
-      }, function(res, convo) {
-        convo.gotoThread('completed');
-      }, {
-        key: 'name'
-      }, 'default');
-      convo.addMessage({
-        text: 'done'
-      }, 'completed');
+      }, (response, convo) => {
+        console.log(response);
+        oombawUser.translateTo = response.value;
+      });
+
     });
 
 
@@ -578,3 +572,4 @@ const languages = [
     "value": "zu"
   }
 ];
+
