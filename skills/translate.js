@@ -44,23 +44,15 @@ module.exports = function(controller) {
       }
 
       convo.addQuestion(askPreference, (response, convo) => {
-        console.log("response")
-        console.log(response)
-
         oombawDB.addUserPrefs(oombawUser, response.text)
           .then(oombawUser => translateWord(oombawUser, original.text)
             .then(oombawUser => {
-              console.log("finished translation");
               convo.addMessage(oombawUser.temp.original + ": " + oombawUser.temp.translated, 'completed')
               convo.gotoThread('completed');
-            }));
+            })
+        );
       });
-
     });
-
-
-
-    console.log("wip");
   }
 
   function hasLangPrefsPath(oombawUser, message) {
@@ -76,9 +68,6 @@ module.exports = function(controller) {
 
 
   function translateWord(oombawUser, text) {
-    console.log("translating")
-    console.log(text)
-
     return new Promise((resolve, reject) => {
       translate(text, {
         to: oombawUser.translateTo
@@ -90,9 +79,6 @@ module.exports = function(controller) {
             res.original = text.toLowerCase();
             res.translated = res.text.toLowerCase();
             oombawUser.temp = res;
-            console.log(res);
-            console.log(oombawUser.temp);
-            console.log(oombawUser);
             resolve(oombawUser);
 
           }
@@ -106,63 +92,38 @@ module.exports = function(controller) {
     translate('Do you want to save this?', {
       to: oombawUser.translateTo
     }).then(translatedMessage => {
-      bot.whisper(message, {
-        user: oombawUser.userID,
-        text: translatedMessage.text,
-        response_type: "ephemeral",
-        attachments: [{
-          text: "",
-          fallback: 'Yes or No?',
-          callback_id: 'yesno_callback',
-          actions: [{
-            name: 'answer',
-            text: ':thumbsup:',
-            type: 'button',
-            value: 'yes'
-          },
-            {
+      bot.startConversation(message, (err, convo) => {
+        saveMessage = {
+          user: oombawUser.userID,
+          text: translatedMessage.text,
+          response_type: "ephemeral",
+          attachments: [{
+            text: "",
+            fallback: 'Yes or No?',
+            callback_id: 'yesno_callback',
+            actions: [{
               name: 'answer',
-              text: ':thumbsdown:',
+              text: ':thumbsup:',
               type: 'button',
-              value: 'no'
-            }
-          ]
-        }]
-      });
-
-
-
-      controller.on('interactive_message_callback', function(bot, message) {
-        if (message.text == "yes" && message.callback_id == "yesno_callback") {
-          oombawDB.saveVocab(oombawUser);
-          bot.replyInteractive(message, {
-            text: ":ok_hand:",
-            replace_original: true,
-            callback_id: 'yesno_callback',
-            response_type: 'ephemeral'
-          }, (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-            }
-          });
-
-        } else if (message.text == "no" && message.callback_id == "yesno_callback") {
-          bot.replyInteractive(message, {
-            text: ":ok_hand:",
-            replace_original: true,
-            callback_id: 'yesno_callback',
-            response_type: 'ephemeral'
-          }, (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-            }
-          });
+              value: 'yes'
+            },
+              {
+                name: 'answer',
+                text: ':thumbsdown:',
+                type: 'button',
+                value: 'no'
+              }
+            ]
+          }]
         }
-
-      });
-
+        convo.addQuestion(saveMessage, (response, convo) => {
+          if (response.text == "yes") {
+            oombawDB.saveVocab(oombawUser);
+            convo.addMessage(":ok_hand:", 'completed')
+            convo.gotoThread('completed');
+          }
+        })
+      })
     });
 
   }
